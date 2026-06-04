@@ -20,8 +20,12 @@ const FamilyScroll = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.8 }}
-      className="w-full flex justify-center pb-32 pt-4 px-4"
+      className="w-full flex flex-col items-center pb-32 pt-8 px-4"
     >
+      <h2 className="font-serif text-center mb-16 uppercase tracking-[0.32em] font-light text-transparent bg-gradient-to-b from-[#FFF0D0] via-[#D4AF37] to-[#B38728] bg-clip-text drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.85)] text-2xl md:text-3xl">
+        Our Family
+      </h2>
+
       <div className="relative w-full max-w-lg bg-[#FDFBF7] text-royal-blue p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-champagne-gold/50 rounded-sm">
         
         {/* Scroll Accents */}
@@ -36,7 +40,7 @@ const FamilyScroll = () => {
         <div className="text-center space-y-10 mt-6 mb-6">
           
           <div>
-            <h3 className="text-sm tracking-[0.3em] uppercase text-champagne-gold font-bold mb-4">With Blessings From</h3>
+            <h3 className="font-serif text-xs tracking-[0.25em] uppercase text-champagne-gold font-semibold mb-4">With Blessings From</h3>
             {family.blessings.map((person, idx) => (
               <p key={idx} className="font-serif text-xl md:text-2xl font-semibold mb-1">{person}</p>
             ))}
@@ -45,7 +49,7 @@ const FamilyScroll = () => {
           <div className="w-16 h-[1px] bg-champagne-gold mx-auto"></div>
 
           <div>
-            <h3 className="text-sm tracking-[0.3em] uppercase text-champagne-gold font-bold mb-4">Invited By</h3>
+            <h3 className="font-serif text-xs tracking-[0.25em] uppercase text-champagne-gold font-semibold mb-4">Invited By</h3>
             {family.invitedBy.map((person, idx) => (
               <p key={idx} className="font-sans text-base md:text-lg uppercase tracking-wider mb-2">{person}</p>
             ))}
@@ -54,7 +58,7 @@ const FamilyScroll = () => {
           <div className="w-16 h-[1px] bg-champagne-gold mx-auto"></div>
 
           <div>
-            <h3 className="text-sm tracking-[0.3em] uppercase text-champagne-gold font-bold mb-4">Groom's Family</h3>
+            <h3 className="font-serif text-xs tracking-[0.25em] uppercase text-champagne-gold font-semibold mb-4">Groom's Family</h3>
             {family.groomsFamily.map((person, idx) => (
               <p key={idx} className="font-sans text-base md:text-lg uppercase tracking-wider mb-2">{person}</p>
             ))}

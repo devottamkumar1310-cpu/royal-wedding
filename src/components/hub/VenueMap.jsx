@@ -16,7 +16,7 @@ const VenueMap = () => {
       transition={{ duration: 0.6 }}
       className="w-full flex flex-col items-center pb-32 pt-4 px-4"
     >
-      <h2 className="text-2xl md:text-4xl text-champagne-gold font-serif text-center mb-8 tracking-[0.2em] uppercase drop-shadow-md">
+      <h2 className="font-serif text-center mb-16 uppercase tracking-[0.32em] font-light text-transparent bg-gradient-to-b from-[#FFF0D0] via-[#D4AF37] to-[#B38728] bg-clip-text drop-shadow-[0_1.5px_2.5px_rgba(0,0,0,0.9)] text-2xl md:text-3xl">
         The Grand Venue
       </h2>
 

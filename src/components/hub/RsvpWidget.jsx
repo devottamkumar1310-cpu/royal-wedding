@@ -8,6 +8,7 @@ const RsvpWidget = () => {
   const [formData, setFormData] = useState({ name: '', phone: '', guests: 1, attending: true, message: '' });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState('');
 
   const phoneNumber = "919876543210"; 
   const waMessage = "Namaste! We are delighted to confirm our presence at the Royal Wedding Celebration.";
@@ -19,53 +20,42 @@ const RsvpWidget = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Client side validation
-    const phoneRegex = /^[0-9]{10}$/; // Basic 10-digit validation to be safe
+
+    // Client-side validation
+    const phoneRegex = /^[0-9]{10}$/;
     if (!phoneRegex.test(formData.phone)) {
-      alert('Please enter a valid 10-digit mobile number.');
+      setFormError('Please enter a valid 10-digit mobile number.');
       return;
     }
     if (formData.attending && formData.guests < 1) {
-      alert('Guest count must be at least 1 if attending.');
+      setFormError('Guest count must be at least 1 if attending.');
       return;
     }
+    setFormError('');
 
     setSubmitting(true);
     try {
-      const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
-      if (!GOOGLE_SCRIPT_URL) {
-        throw new Error("Google Script URL is missing.");
-      }
-      
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          guests_count: formData.attending ? parseInt(formData.guests) : 0,
-          is_attending: formData.attending,
-          message: formData.message
-        })
-      });
+      const { error } = await supabase.from('rsvp').insert([{
+        guest_name:   formData.name.trim(),
+        phone:        formData.phone.trim(),
+        guests_count: formData.attending ? parseInt(formData.guests, 10) : 0,
+        is_attending: formData.attending,
+        message:      formData.message.trim() || null,
+      }]);
 
-      const result = await response.json();
-      
-      if (result.status === 'success') {
-        setSubmitted(true);
-      } else {
-        throw new Error(result.message || 'Error submitting RSVP');
+      if (error) {
+        throw error;
       }
+
+      setSubmitted(true);
     } catch (error) {
-      console.error(error);
-      alert('Error submitting RSVP. Please try again.');
+      console.error('[RsvpWidget] insert error:', error);
+      setFormError('Something went wrong. Please try again or confirm via WhatsApp.');
     } finally {
       setSubmitting(false);
     }
   };
+
 
   return (
     <motion.div 
@@ -74,8 +64,12 @@ const RsvpWidget = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.6 }}
-      className="w-full flex flex-col items-center justify-center pb-32 pt-4 px-4"
+      className="w-full flex flex-col items-center pb-32 pt-8 px-4"
     >
+      <h2 className="font-serif text-center mb-16 uppercase tracking-[0.32em] font-light text-transparent bg-gradient-to-b from-[#FFF0D0] via-[#D4AF37] to-[#B38728] bg-clip-text drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.85)] text-2xl md:text-3xl">
+        RSVP
+      </h2>
+
       <div className="w-full max-w-lg bg-royal-blue/30 backdrop-blur-xl border-y-2 md:border-2 border-champagne-gold/50 p-10 md:p-16 text-center relative overflow-hidden shadow-[0_0_40px_rgba(212,175,55,0.15)]">
         
         <div className="absolute inset-0 flex justify-center items-center pointer-events-none opacity-20">
@@ -90,7 +84,7 @@ const RsvpWidget = () => {
             <motion.div key="success" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center relative z-10 py-10">
               <div className="w-16 h-16 mx-auto border-2 border-champagne-gold rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(212,175,55,0.3)]">
                 <svg className="w-8 h-8 text-champagne-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               <h3 className="text-3xl text-champagne-gold font-serif mb-4">Thank You</h3>
@@ -103,9 +97,9 @@ const RsvpWidget = () => {
             </motion.div>
           ) : !showForm ? (
             <motion.div key="intro" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="relative z-10">
-              <h2 className="text-3xl md:text-5xl text-champagne-gold font-serif mb-6 drop-shadow-md">
+              <h3 className="text-xl md:text-3xl font-serif mb-6 text-transparent bg-gradient-to-b from-[#FFF0D0] via-[#D4AF37] to-[#B38728] bg-clip-text drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.8)] leading-relaxed">
                 Your Presence <br/> is our Privilege
-              </h2>
+              </h3>
               <p className="text-ivory/80 font-sans text-sm md:text-base leading-relaxed tracking-wider mb-10">
                 We eagerly await your gracious presence to bless the couple and celebrate this joyous occasion.
               </p>
@@ -156,9 +150,20 @@ const RsvpWidget = () => {
                 <textarea rows="2" value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} className="w-full bg-black/20 border-b border-champagne-gold/30 p-2 text-ivory outline-none focus:border-champagne-gold resize-none" />
               </div>
 
+              {/* Inline error — no native alert() dialogs in luxury UI */}
+              {formError && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-sm text-red-400/90 text-center py-2 border border-red-400/20 rounded px-3 bg-red-400/5"
+                >
+                  {formError}
+                </motion.p>
+              )}
+
               <div className="flex space-x-4 pt-4">
-                <button type="button" onClick={() => setShowForm(false)} className="flex-1 py-3 text-ivory/70 uppercase tracking-widest text-xs hover:text-ivory transition-colors">Back</button>
-                <MagneticButton className="flex-1 py-3 bg-champagne-gold text-royal-blue uppercase tracking-widest text-xs font-semibold hover:bg-ivory transition-colors duration-500">
+                <button type="button" onClick={() => { setShowForm(false); setFormError(''); }} className="flex-1 py-3 text-ivory/70 uppercase tracking-widest text-xs hover:text-ivory transition-colors">Back</button>
+                <MagneticButton type="submit" className="flex-1 py-3 bg-champagne-gold text-royal-blue uppercase tracking-widest text-xs font-semibold hover:bg-ivory transition-colors duration-500">
                   {submitting ? 'Sending...' : 'Confirm'}
                 </MagneticButton>
               </div>

@@ -1,7 +1,10 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 const ParticleSystem = ({ count = 30, color = "#D4AF37" }) => {
+  // Halve particle count on mobile to protect the JS animation thread
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const effectiveCount = isMobile ? Math.floor(count / 2) : count;
   const [particles, setParticles] = useState([]);
 
   // Mouse tracking for fluid parallax
@@ -15,26 +18,30 @@ const ParticleSystem = ({ count = 30, color = "#D4AF37" }) => {
   const translateY = useTransform(springY, [-0.5, 0.5], ["-20px", "20px"]);
 
   useEffect(() => {
-    const generatedParticles = Array.from({ length: count }).map((_, i) => ({
+    const generatedParticles = Array.from({ length: effectiveCount }).map((_, i) => ({
       id: i,
-      x: Math.random() * 100, // percentage
-      y: Math.random() * 100, // percentage
-      size: Math.random() * 4 + 1, // 1px to 5px
-      duration: Math.random() * 10 + 10, // 10s to 20s
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 4 + 1,
+      duration: Math.random() * 10 + 10,
       delay: Math.random() * 5,
+      // F3: dx computed ONCE here, not inside the animate prop on every render
+      dx: (Math.random() - 0.5) * 20,
     }));
     setParticles(generatedParticles);
 
-    const handleMouseMove = (e) => {
-      const xPct = e.clientX / window.innerWidth - 0.5;
-      const yPct = e.clientY / window.innerHeight - 0.5;
-      mouseX.set(xPct);
-      mouseY.set(yPct);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [count, mouseX, mouseY]);
+    // Only add mouse-parallax on desktop — no-op cost on touch devices
+    if (!isMobile) {
+      const handleMouseMove = (e) => {
+        const xPct = e.clientX / window.innerWidth - 0.5;
+        const yPct = e.clientY / window.innerHeight - 0.5;
+        mouseX.set(xPct);
+        mouseY.set(yPct);
+      };
+      window.addEventListener('mousemove', handleMouseMove);
+      return () => window.removeEventListener('mousemove', handleMouseMove);
+    }
+  }, [effectiveCount, mouseX, mouseY, isMobile]);
 
   return (
     <motion.div 
@@ -55,7 +62,7 @@ const ParticleSystem = ({ count = 30, color = "#D4AF37" }) => {
           }}
           animate={{
             y: ["0vh", "-100vh"],
-            x: ["0vw", `${(Math.random() - 0.5) * 20}vw`],
+            x: ["0vw", `${p.dx}vw`],
             opacity: [0, 0.8, 0],
           }}
           transition={{

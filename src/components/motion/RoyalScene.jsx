@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion';
 import ParticleSystem from './ParticleSystem';
-import LightRays from './LightRays';
+// LightRays is now a global fixed layer mounted in App.jsx — not per-scene
 import RoyalBorder from '../svg/RoyalBorder';
 import FiligreeCorner from '../svg/FiligreeCorner';
-import SkyLanterns from './SkyLanterns';
 import Diya from '../svg/Diya';
 import AudioToggle from '../shared/AudioToggle';
 
@@ -15,10 +14,11 @@ const RoyalScene = ({
   withParticles = true, 
   withLightRays = true,
   withBorders = true,
-  bgStyle = {}
+  bgStyle = {},
+  contentJustify = "justify-center"
 }) => {
   return (
-    <div className="relative flex items-center justify-center min-h-[100dvh] w-full overflow-hidden bg-royal-blue perspective-1000">
+    <div className="relative flex items-center justify-center min-h-[100dvh] w-full overflow-x-hidden bg-royal-blue perspective-1000">
       
       <AudioToggle />
 
@@ -31,14 +31,13 @@ const RoyalScene = ({
         style={bgStyle}
       >
         {backgroundComponent}
-        {withLightRays && <LightRays />}
+        {/* withLightRays prop kept for API compat — LightRays is now a global fixed layer */}
       </motion.div>
 
-      {/* 2. Particle Layer & Lanterns */}
+      {/* 2. Particle Layer (dust/sparkle atmosphere) */}
       {withParticles && (
         <div className="absolute inset-0 z-10 pointer-events-none">
           <ParticleSystem count={40} />
-          <SkyLanterns count={6} />
         </div>
       )}
 
@@ -52,20 +51,23 @@ const RoyalScene = ({
       {/* 4. Borders & Corners (Static UI layer over architecture) */}
       {withBorders && (
         <div className="absolute inset-0 z-30 pointer-events-none">
-          <RoyalBorder />
-          <FiligreeCorner position="top-left" className="absolute top-6 left-6 opacity-70 w-16 h-16 md:w-24 md:h-24" />
-          <FiligreeCorner position="top-right" className="absolute top-6 right-6 opacity-70 w-16 h-16 md:w-24 md:h-24" />
-          <FiligreeCorner position="bottom-left" className="absolute bottom-6 left-6 opacity-70 w-16 h-16 md:w-24 md:h-24" />
-          <FiligreeCorner position="bottom-right" className="absolute bottom-6 right-6 opacity-70 w-16 h-16 md:w-24 md:h-24" />
-          
+          {/* Hide side borders on mobile — recover horizontal width */}
+          <div className="hidden md:block">
+            <RoyalBorder />
+          </div>
+          <FiligreeCorner position="top-left"    className="absolute top-3 left-3 md:top-6 md:left-6   opacity-70 w-10 h-10 md:w-24 md:h-24" />
+          <FiligreeCorner position="top-right"   className="absolute top-3 right-3 md:top-6 md:right-6 opacity-70 w-10 h-10 md:w-24 md:h-24" />
+          <FiligreeCorner position="bottom-left"  className="absolute bottom-3 left-3 md:bottom-6 md:left-6   opacity-70 w-10 h-10 md:w-24 md:h-24" />
+          <FiligreeCorner position="bottom-right" className="absolute bottom-3 right-3 md:bottom-6 md:right-6 opacity-70 w-10 h-10 md:w-24 md:h-24" />
+
           {/* Decorative Corner Diyas */}
-          <Diya className="absolute bottom-8 left-8 md:bottom-10 md:left-10 opacity-90" />
-          <Diya className="absolute bottom-8 right-8 md:bottom-10 md:right-10 opacity-90" flipped={true} />
+          <Diya className="absolute bottom-6 left-4 md:bottom-10 md:left-10 opacity-80" />
+          <Diya className="absolute bottom-6 right-4 md:bottom-10 md:right-10 opacity-80" flipped={true} />
         </div>
       )}
 
       {/* 5. Foreground / Content Layer (Text, Interactions) */}
-      <div className="relative z-40 flex flex-col items-center justify-center w-full h-full">
+      <div className={`relative z-40 flex flex-col items-center ${contentJustify} w-full min-h-[100dvh]`}>
         {foregroundComponent}
         {children}
       </div>

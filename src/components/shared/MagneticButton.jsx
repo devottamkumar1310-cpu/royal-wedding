@@ -1,61 +1,42 @@
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useRef } from 'react';
 
-const MagneticButton = ({ children, onClick, className = "" }) => {
+// F6 FIX: Added `type` prop (default 'button') forwarded to <motion.button>.
+// Without this, MagneticButton inside a <form> context (BlessingsWall, RsvpWidget)
+// relied on the browser's implicit type="submit" inference, which is unreliable
+// on older Android WebView and Samsung Internet.
+
+const MagneticButton = ({ children, onClick, className = '', type = 'button' }) => {
   const ref = useRef(null);
-  
-  // Subtle magnetic tracking
+  const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  
   const springX = useSpring(x, { stiffness: 150, damping: 15, mass: 0.1 });
   const springY = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 });
 
   const handleMouseMove = (e) => {
-    const { clientX, clientY } = e;
+    if (isTouchDevice || !ref.current) return;
     const { left, top, width, height } = ref.current.getBoundingClientRect();
-    
-    // Calculate center of button
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
-    
-    // Distance from center (dampened for subtlety)
-    const distanceX = (clientX - centerX) * 0.1;
-    const distanceY = (clientY - centerY) * 0.1;
-    
-    x.set(distanceX);
-    y.set(distanceY);
+    x.set((e.clientX - (left + width  / 2)) * 0.1);
+    y.set((e.clientY - (top  + height / 2)) * 0.1);
   };
 
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+  const handleMouseLeave = () => { x.set(0); y.set(0); };
 
   return (
     <motion.button
       ref={ref}
+      type={type}
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ x: springX, y: springY }}
-      className={`relative group overflow-hidden ${className}`}
+      style={isTouchDevice ? undefined : { x: springX, y: springY }}
+      className={`relative group ${className}`}
       whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: 0.97 }}
     >
-      {/* The shimmering liquid reflection */}
-      <motion.div 
-        className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-overlay"
-        style={{
-          background: 'linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)',
-          backgroundSize: '200% 100%',
-        }}
-        animate={{ backgroundPosition: ["100% 0", "-100% 0"] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-      />
-      
-      {/* Content wrapper to ensure text stays above shimmer */}
-      <div className="relative z-10 w-full h-full flex items-center justify-center pointer-events-none">
+      <div className="relative z-10 w-full h-full flex items-center justify-center">
         {children}
       </div>
     </motion.button>

@@ -15,9 +15,9 @@
 
 /* Lock the body to prevent any accidental bouncing or scrolling */
 body {
-  background-color: #0B3046;
-  color: #FFFFF0;
-  overflow: hidden; 
+  background-color: #081826;
+  color: #E8DFC8;
+  overflow-x: hidden; 
   margin: 0;
   padding: 0;
 }

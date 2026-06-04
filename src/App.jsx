@@ -6,18 +6,20 @@ import Screen2Envelope from './components/screens/Screen2Envelope';
 import Screen3Hub from './components/screens/Screen3Hub';
 import MusicPlayer from './components/shared/MusicPlayer';
 import SoundToggle from './components/shared/SoundToggle';
+import FloatingLanternLayer from './components/motion/FloatingLanternLayer';
+import GlobalLightRays from './components/motion/LightRays';
 
 const SceneManager = () => {
   const { currentScreen } = useWedding();
 
   const pageVariants = {
-    initial: { opacity: 0, filter: "blur(10px)" },
-    in: { opacity: 1, filter: "blur(0px)", transition: { duration: 1.5, ease: "easeInOut" } },
-    out: { opacity: 0, filter: "blur(10px)", transition: { duration: 1.5, ease: "easeInOut" } }
+    initial: { opacity: 0, y: 20 },
+    in: { opacity: 1, y: 0, transition: { duration: 1.5, ease: "easeOut" } },
+    out: { opacity: 0, y: -20, transition: { duration: 1.5, ease: "easeOut" } }
   };
 
   return (
-    <div className="bg-royal-blue min-h-[100dvh] w-full text-ivory overflow-hidden relative flex items-center justify-center font-sans no-scrollbar">
+    <div className="bg-royal-blue min-h-[100dvh] w-full text-ivory overflow-x-hidden relative flex flex-col items-center font-sans no-scrollbar">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentScreen}
@@ -25,7 +27,7 @@ const SceneManager = () => {
           animate="in"
           exit="out"
           variants={pageVariants}
-          className="absolute inset-0 flex flex-col items-center justify-center w-full h-full"
+          className="relative w-full min-h-[100dvh] flex flex-col items-center justify-start"
         >
           {currentScreen === 0 && <Screen1Blessing />}
           {currentScreen === 1 && <Screen2Envelope />}
@@ -54,10 +56,13 @@ export default function App() {
         <Routes>
           <Route path="/" element={
             <WeddingProvider>
-              <MusicPlayer />
-              <SoundToggle />
-              <SceneManager />
-            </WeddingProvider>
+            {/* Global atmospheric layers — fixed, behind all screens */}
+            <FloatingLanternLayer />
+            <GlobalLightRays />
+            <MusicPlayer />
+            <SoundToggle />
+            <SceneManager />
+          </WeddingProvider>
           } />
           
           {/* Protected Admin Area */}
