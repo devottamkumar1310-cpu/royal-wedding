@@ -10,14 +10,6 @@ const RsvpWidget = () => {
   const [submitted, setSubmitted] = useState(false);
   const [formError, setFormError] = useState('');
 
-  const phoneNumber = "919876543210"; 
-  const waMessage = "Namaste! We are delighted to confirm our presence at the Royal Wedding Celebration.";
-  
-  const handleWhatsApp = () => {
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(waMessage)}`;
-    window.open(url, '_blank');
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,24 +25,37 @@ const RsvpWidget = () => {
     }
     setFormError('');
 
+    console.log("ENV URL:", import.meta.env.VITE_GOOGLE_SCRIPT_URL);
+    console.log("ALL ENV VARS:", import.meta.env);
+    
+    const googleScriptUrl = import.meta.env.VITE_GOOGLE_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbyuX6fJn9h41iXZWxbaxzjBz0aGZ_7z9UmmKMnpvjQSXAReKC6U5CcZxutouazCr3iz/exec";
+    if (!googleScriptUrl) {
+      setFormError('RSVP service is not configured. Please define VITE_GOOGLE_SCRIPT_URL.');
+      return;
+    }
+
     setSubmitting(true);
     try {
-      const { error } = await supabase.from('rsvp').insert([{
-        guest_name:   formData.name.trim(),
-        phone:        formData.phone.trim(),
-        guests_count: formData.attending ? parseInt(formData.guests, 10) : 0,
-        is_attending: formData.attending,
-        message:      formData.message.trim() || null,
-      }]);
-
-      if (error) {
-        throw error;
-      }
+      // Direct POST to Google Sheets
+      await fetch(googleScriptUrl, {
+        method: 'POST',
+        mode: 'no-cors', // standard mode to bypass CORS issues for Apps Script
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          guest_name: formData.name.trim(),
+          phone: formData.phone.trim(),
+          is_attending: formData.attending,
+          guests_count: formData.attending ? parseInt(formData.guests, 10) : 0,
+          message: formData.message.trim() || '',
+        }),
+      });
 
       setSubmitted(true);
     } catch (error) {
-      console.error('[RsvpWidget] insert error:', error);
-      setFormError('Something went wrong. Please try again or confirm via WhatsApp.');
+      console.error('[RsvpWidget] submit error:', error);
+      setFormError('Something went wrong. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -66,88 +71,85 @@ const RsvpWidget = () => {
       transition={{ duration: 0.6 }}
       className="w-full flex flex-col items-center pb-32 pt-8 px-4"
     >
-      <h2 className="font-serif text-center mb-16 uppercase tracking-[0.32em] font-light text-transparent bg-gradient-to-b from-[#FFF0D0] via-[#D4AF37] to-[#B38728] bg-clip-text drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.85)] text-2xl md:text-3xl">
+      <h2 className="font-greatvibes text-center mb-16 text-rose-accent text-4xl font-normal">
         RSVP
       </h2>
 
-      <div className="w-full max-w-lg bg-royal-blue/30 backdrop-blur-xl border-y-2 md:border-2 border-champagne-gold/50 p-10 md:p-16 text-center relative overflow-hidden shadow-[0_0_40px_rgba(212,175,55,0.15)]">
+      <div className="w-full max-w-lg bg-stationery-gradient p-10 md:p-16 text-center relative overflow-hidden shadow-luxe-medium rounded-sm">
         
-        <div className="absolute inset-0 flex justify-center items-center pointer-events-none opacity-20">
+        <div className="absolute inset-0 flex justify-center items-center pointer-events-none opacity-5">
           <svg viewBox="0 0 200 200" className="w-full h-full scale-150">
-             <circle cx="100" cy="100" r="80" fill="none" stroke="#D4AF37" strokeWidth="1" strokeDasharray="4 4" />
-             <circle cx="100" cy="100" r="70" fill="none" stroke="#D4AF37" strokeWidth="0.5" />
+             <circle cx="100" cy="100" r="80" fill="none" stroke="#D4922A" strokeWidth="1" strokeDasharray="4 4" />
+             <circle cx="100" cy="100" r="70" fill="none" stroke="#D4922A" strokeWidth="0.5" />
           </svg>
         </div>
 
         <AnimatePresence mode="wait">
           {submitted ? (
             <motion.div key="success" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center relative z-10 py-10">
-              <div className="w-16 h-16 mx-auto border-2 border-champagne-gold rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(212,175,55,0.3)]">
-                <svg className="w-8 h-8 text-champagne-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-16 h-16 mx-auto border-2 border-sage-green rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(156,175,136,0.1)]">
+                <svg className="w-8 h-8 text-sage-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+                 </svg>
               </div>
-              <h3 className="text-3xl text-champagne-gold font-serif mb-4">Thank You</h3>
-              <p className="text-ivory/90 font-sans tracking-wide leading-relaxed mb-8 max-w-sm mx-auto">
+              <h3 className="text-3xl text-rose-accent font-greatvibes mb-4">Thank You</h3>
+              <p className="text-[#5C3F2A]/90 font-lato tracking-wide leading-relaxed mb-8 max-w-sm mx-auto text-sm font-light">
                 We have received your response and look forward to celebrating this joyous occasion with you.
               </p>
-              <button onClick={() => { setSubmitted(false); setFormData({ name: '', phone: '', guests: 1, attending: true, message: '' }) }} className="text-champagne-gold/70 hover:text-champagne-gold uppercase tracking-widest text-xs border-b border-champagne-gold/30 pb-1">
+              <button onClick={() => { setSubmitted(false); setFormData({ name: '', phone: '', guests: 1, attending: true, message: '' }) }} className="text-rose-accent hover:text-[#D4922A] uppercase tracking-widest text-xs border-b border-rose-accent/30 pb-1 font-lato">
                 Submit another response
               </button>
             </motion.div>
           ) : !showForm ? (
             <motion.div key="intro" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="relative z-10">
-              <h3 className="text-xl md:text-3xl font-serif mb-6 text-transparent bg-gradient-to-b from-[#FFF0D0] via-[#D4AF37] to-[#B38728] bg-clip-text drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.8)] leading-relaxed">
+              <h3 className="text-xl md:text-2xl font-cormorant mb-6 text-rose-accent leading-relaxed font-normal">
                 Your Presence <br/> is our Privilege
               </h3>
-              <p className="text-ivory/80 font-sans text-sm md:text-base leading-relaxed tracking-wider mb-10">
+              <p className="text-[#5C3F2A]/80 font-lato text-sm md:text-base leading-relaxed tracking-wider mb-10 font-light">
                 We eagerly await your gracious presence to bless the couple and celebrate this joyous occasion.
               </p>
               <div className="flex flex-col space-y-4 items-center">
-                <MagneticButton 
+                 <MagneticButton 
                   onClick={() => setShowForm(true)}
-                  className="px-10 py-4 bg-champagne-gold text-royal-blue uppercase tracking-widest text-sm font-semibold hover:bg-ivory transition-colors duration-500 w-full shadow-[0_0_15px_rgba(212,175,55,0.4)]"
+                  className="btn-luxury px-10 py-4 uppercase tracking-widest shadow-luxe-medium hover:shadow-luxe-strong transition-all duration-300 w-full relative"
                 >
-                  Digital RSVP
+                  <span className="relative z-10">Digital RSVP</span>
                 </MagneticButton>
-                <button onClick={handleWhatsApp} className="text-champagne-gold/70 hover:text-champagne-gold uppercase tracking-widest text-xs transition-colors">
-                  Or confirm via WhatsApp
-                </button>
               </div>
             </motion.div>
           ) : (
             <motion.form key="form" onSubmit={handleSubmit} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="relative z-10 text-left space-y-4">
-              <h3 className="text-xl text-champagne-gold font-serif text-center uppercase tracking-widest mb-6">Digital RSVP</h3>
+              <h3 className="text-lg text-rose-accent font-cormorant text-center uppercase tracking-widest mb-6 font-semibold">Digital RSVP</h3>
               
               <div>
-                <label className="block text-xs uppercase tracking-wider text-ivory/70 mb-1">Name</label>
-                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-black/20 border-b border-champagne-gold/30 p-3 text-ivory outline-none focus:border-champagne-gold text-lg" />
+                <label className="block text-xs uppercase tracking-wider text-[#5C3F2A]/70 mb-1 font-lato font-light">Name</label>
+                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-white border border-[#E0E0E0] p-3 text-[#5C3F2A] outline-none focus:border-[#D4922A] text-base rounded-md transition-colors" />
               </div>
               
               <div>
-                <label className="block text-xs uppercase tracking-wider text-ivory/70 mb-1">Phone</label>
-                <input required pattern="[0-9]{10}" title="10 digit mobile number" type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full bg-black/20 border-b border-champagne-gold/30 p-3 text-ivory outline-none focus:border-champagne-gold text-lg" />
+                <label className="block text-xs uppercase tracking-wider text-[#5C3F2A]/70 mb-1 font-lato font-light">Phone</label>
+                <input required pattern="[0-9]{10}" title="10 digit mobile number" type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full bg-white border border-[#E0E0E0] p-3 text-[#5C3F2A] outline-none focus:border-[#D4922A] text-base rounded-md transition-colors" />
               </div>
               
               <div className="flex space-x-4">
                 <div className="flex-1">
-                  <label className="block text-xs uppercase tracking-wider text-ivory/70 mb-1">Attending?</label>
-                  <select value={formData.attending} onChange={e => setFormData({...formData, attending: e.target.value === 'true'})} className="w-full bg-black/20 border-b border-champagne-gold/30 p-3 text-ivory outline-none focus:border-champagne-gold appearance-none text-lg">
+                  <label className="block text-xs uppercase tracking-wider text-[#5C3F2A]/70 mb-1 font-lato font-light">Attending?</label>
+                  <select value={formData.attending} onChange={e => setFormData({...formData, attending: e.target.value === 'true'})} className="w-full bg-white border border-[#E0E0E0] p-3 text-[#5C3F2A] outline-none focus:border-[#D4922A] text-base rounded-md transition-colors cursor-pointer">
                     <option value="true">Yes, joyfully</option>
                     <option value="false">Regretfully, no</option>
                   </select>
                 </div>
                 {formData.attending && (
                   <div className="flex-1">
-                    <label className="block text-xs uppercase tracking-wider text-ivory/70 mb-1">Guests</label>
-                    <input type="number" min="1" max="20" value={formData.guests} onChange={e => setFormData({...formData, guests: e.target.value})} className="w-full bg-black/20 border-b border-champagne-gold/30 p-3 text-ivory outline-none focus:border-champagne-gold text-lg" />
+                    <label className="block text-xs uppercase tracking-wider text-[#5C3F2A]/70 mb-1 font-lato font-light">Guests</label>
+                    <input type="number" min="1" max="20" value={formData.guests} onChange={e => setFormData({...formData, guests: e.target.value})} className="w-full bg-white border border-[#E0E0E0] p-3 text-[#5C3F2A] outline-none focus:border-[#D4922A] text-base rounded-md transition-colors" />
                   </div>
                 )}
               </div>
               
               <div>
-                <label className="block text-xs uppercase tracking-wider text-ivory/70 mb-1">Message (Optional)</label>
-                <textarea rows="2" value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} className="w-full bg-black/20 border-b border-champagne-gold/30 p-2 text-ivory outline-none focus:border-champagne-gold resize-none" />
+                <label className="block text-xs uppercase tracking-wider text-[#5C3F2A]/70 mb-1 font-lato font-light">Message (Optional)</label>
+                <textarea rows="2" value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} className="w-full bg-white border border-[#E0E0E0] p-2.5 text-[#5C3F2A] outline-none focus:border-[#D4922A] text-base rounded-md transition-colors resize-none" />
               </div>
 
               {/* Inline error — no native alert() dialogs in luxury UI */}
@@ -155,16 +157,16 @@ const RsvpWidget = () => {
                 <motion.p
                   initial={{ opacity: 0, y: -4 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-sm text-red-400/90 text-center py-2 border border-red-400/20 rounded px-3 bg-red-400/5"
+                  className="text-sm text-red-500/90 text-center py-2 border border-red-500/20 rounded px-3 bg-red-500/5 font-lato font-light"
                 >
                   {formError}
                 </motion.p>
               )}
 
               <div className="flex space-x-4 pt-4">
-                <button type="button" onClick={() => { setShowForm(false); setFormError(''); }} className="flex-1 py-3 text-ivory/70 uppercase tracking-widest text-xs hover:text-ivory transition-colors">Back</button>
-                <MagneticButton type="submit" className="flex-1 py-3 bg-champagne-gold text-royal-blue uppercase tracking-widest text-xs font-semibold hover:bg-ivory transition-colors duration-500">
-                  {submitting ? 'Sending...' : 'Confirm'}
+                <button type="button" onClick={() => { setShowForm(false); setFormError(''); }} className="flex-1 py-3 text-[#5C3F2A]/70 uppercase tracking-widest text-xs hover:text-[#5C3F2A] transition-colors font-lato font-normal">Back</button>
+                <MagneticButton type="submit" className="btn-luxury flex-1 py-3 uppercase tracking-widest shadow-luxe-medium hover:shadow-luxe-strong transition-all duration-300 relative">
+                  <span className="relative z-10">{submitting ? 'Sending...' : 'Confirm'}</span>
                 </MagneticButton>
               </div>
             </motion.form>

@@ -31,19 +31,20 @@ const NavigationMenu = ({ activeTab, setActiveTab }) => {
         className="hidden md:block fixed left-1/2 -translate-x-1/2 z-[100] w-[95%] max-w-2xl"
         style={{ bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}
       >
-        <div className="flex justify-between items-center bg-royal-blue/70 backdrop-blur-md border border-champagne-gold/50 rounded-full px-4 py-3 shadow-[0_0_20px_rgba(212,175,55,0.15)]">
+        <div className="relative flex justify-between items-center bg-stationery-gradient backdrop-blur-md border border-[#D4922A]/20 rounded-full px-5 py-3.5 shadow-luxe-strong">
+          <div className="absolute inset-[3px] border border-[#D4922A]/10 pointer-events-none rounded-full" />
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex flex-col items-center space-y-1 transition-all duration-300 min-w-[50px] ${
+              className={`relative z-10 flex flex-col items-center space-y-1 transition-all duration-300 min-w-[50px] ${
                 activeTab === tab.id
-                  ? 'text-champagne-gold scale-110 drop-shadow-[0_0_8px_rgba(212,175,55,0.8)]'
-                  : 'text-ivory/50 hover:text-ivory'
+                  ? 'text-luxe-gold scale-110'
+                  : 'text-[#5C3F2A]/50 hover:text-luxe-gold'
               }`}
             >
               {tab.icon}
-              <span className="text-[10px] uppercase tracking-widest font-sans">{tab.label}</span>
+              <span className="text-[10px] uppercase tracking-widest font-sans font-medium">{tab.label}</span>
             </button>
           ))}
         </div>
@@ -62,20 +63,21 @@ const NavigationMenu = ({ activeTab, setActiveTab }) => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.96 }}
               transition={{ duration: 0.18, ease: 'easeOut' }}
-              className="mb-2.5 bg-[#081826]/96 border border-champagne-gold/30 rounded-2xl p-3
-                         shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_20px_rgba(212,175,55,0.08)]
+              className="relative mb-2.5 bg-stationery-gradient backdrop-blur-md border border-[#D4922A]/20 rounded-2xl p-3
+                         shadow-luxe-strong
                          grid grid-cols-4 gap-2"
               style={{ width: 'min(308px, 88vw)' }}
             >
+              <div className="absolute inset-[3px] border border-[#D4922A]/10 pointer-events-none rounded-[13px]" />
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => handleTabSelect(tab.id)}
-                  className={`flex flex-col items-center py-2.5 px-1 rounded-xl
+                  className={`relative z-10 flex flex-col items-center py-2.5 px-1 rounded-xl
                     transition-colors duration-150 active:scale-95
                     ${activeTab === tab.id
-                      ? 'text-champagne-gold bg-champagne-gold/10 border border-champagne-gold/25'
-                      : 'text-ivory/55'
+                      ? 'text-luxe-gold bg-[#D4922A]/10 border border-[#D4922A]/20'
+                      : 'text-[#5C3F2A]/50'
                     }`}
                 >
                   {tab.icon}
@@ -93,22 +95,23 @@ const NavigationMenu = ({ activeTab, setActiveTab }) => {
           initial={{ y: 80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1, duration: 0.8 }}
-          className="flex items-center gap-2.5 bg-[#081826]/90 border border-champagne-gold/50
-                     rounded-full px-4 py-2.5 shadow-[0_0_20px_rgba(212,175,55,0.15)]"
+          className="relative flex items-center gap-2.5 bg-stationery-gradient backdrop-blur-md border border-[#D4922A]/20
+                     rounded-full px-4 py-2.5 shadow-luxe-strong"
         >
+          <div className="absolute inset-[3px] border border-[#D4922A]/10 pointer-events-none rounded-full" />
           {/* Active tab icon + label */}
-          <span className="text-champagne-gold">{activeTabData.icon}</span>
-          <span className="text-champagne-gold text-sm font-sans tracking-wide whitespace-nowrap">
+          <span className="relative z-10 text-luxe-gold">{activeTabData.icon}</span>
+          <span className="relative z-10 text-[#5C3F2A] text-sm font-sans tracking-wide whitespace-nowrap font-medium">
             {activeTabData.label}
           </span>
 
           {/* Divider */}
-          <div className="w-px h-4 bg-champagne-gold/30" />
+          <div className="relative z-10 w-px h-4 bg-[#D4922A]/30" />
 
           {/* Expand / collapse toggle */}
           <button
             onClick={() => setIsExpanded(prev => !prev)}
-            className="text-ivory/60 hover:text-champagne-gold transition-colors"
+            className="relative z-10 text-[#5C3F2A]/60 hover:text-luxe-gold transition-colors"
             aria-label={isExpanded ? 'Close navigation' : 'Open navigation'}
           >
             <motion.div
@@ -125,3 +128,4 @@ const NavigationMenu = ({ activeTab, setActiveTab }) => {
 };
 
 export default NavigationMenu;
+

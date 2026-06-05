@@ -7,7 +7,7 @@ const AdminLayout = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-royal-blue flex items-center justify-center text-champagne-gold font-serif">
+      <div className="min-h-screen bg-transparent flex items-center justify-center text-champagne-gold font-serif">
         <motion.div animate={{ opacity: [0.5, 1, 0.5] }} transition={{ repeat: Infinity, duration: 1.5 }}>Loading...</motion.div>
       </div>
     );
@@ -18,9 +18,9 @@ const AdminLayout = () => {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-[#071e2c] text-ivory flex flex-col md:flex-row">
+    <div className="min-h-[100dvh] bg-transparent text-[#F8F4E8] flex flex-col md:flex-row">
       {/* Sidebar */}
-      <div className="w-full md:w-64 bg-royal-blue/80 border-b md:border-b-0 md:border-r border-champagne-gold/20 p-6 flex flex-col shrink-0">
+      <div className="w-full md:w-64 bg-stationery-gradient border-b md:border-b-0 md:border-r border-[#FFC300] p-6 flex flex-col shrink-0">
         <h2 className="text-xl font-serif text-champagne-gold uppercase tracking-widest mb-8">Royal Admin</h2>
         
         <nav className="flex-1 space-y-2">
@@ -35,7 +35,7 @@ const AdminLayout = () => {
               key={item.name} 
               to={item.path}
               end={item.path === '/admin'}
-              className={({ isActive }) => `w-full block text-left px-4 py-3 rounded uppercase tracking-wider text-sm font-sans transition-colors ${isActive ? 'bg-champagne-gold/20 text-champagne-gold' : 'text-ivory/70 hover:text-champagne-gold hover:bg-white/5'}`}
+              className={({ isActive }) => `w-full block text-left px-4 py-3 rounded uppercase tracking-wider text-sm font-sans transition-colors ${isActive ? 'bg-champagne-gold/20 text-champagne-gold' : 'text-[#F8F4E8]/70 hover:text-champagne-gold hover:bg-stationery-gradient/5'}`}
             >
               {item.name}
             </NavLink>
@@ -59,3 +59,4 @@ const AdminLayout = () => {
 };
 
 export default AdminLayout;
+

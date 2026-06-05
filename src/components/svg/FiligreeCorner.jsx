@@ -15,8 +15,8 @@ const FiligreeCorner = ({ className = "", width = "100", height = "100", positio
     >
       <defs>
         <linearGradient id="filigreeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#D4AF37" />
-          <stop offset="100%" stopColor="#F3E5AB" />
+          <stop offset="0%" stopColor="#FFC300" />
+          <stop offset="100%" stopColor="#FFC300" />
         </linearGradient>
       </defs>
       <path

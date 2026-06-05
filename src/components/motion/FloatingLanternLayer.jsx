@@ -173,7 +173,7 @@ const FloatingLanternLayer = () => {
             width:        size,
             height:       size * 1.4,
             borderRadius: '50%',
-            background:   'radial-gradient(circle at 50% 40%, rgba(255,248,220,0.95) 0%, rgba(243,229,171,0.75) 28%, rgba(212,175,55,0.3) 60%, transparent 100%)',
+            background:   'radial-gradient(circle at 50% 40%, rgba(253,251,247,0.9) 0%, rgba(212,146,42,0.3) 35%, transparent 100%)',
             opacity:      maxOpacity,
             willChange:   'transform',
             animation:    `lantern${path} ${duration}s ${delay}s linear infinite`,
@@ -193,7 +193,7 @@ const FloatingLanternLayer = () => {
             height:       size,
             borderRadius: '50%',
             // Brighter warm core — golden amber for festival atmosphere
-            background:   'radial-gradient(circle, rgba(255,240,180,1) 0%, rgba(255,210,100,0.85) 35%, rgba(212,175,55,0.4) 70%, transparent 100%)',
+            background:   'radial-gradient(circle, rgba(253,251,247,0.95) 0%, rgba(212,146,42,0.4) 40%, transparent 100%)',
             opacity:      maxOpacity,
             willChange:   'transform',
             animation:    `festivalLight${path} ${duration}s ${delay}s linear infinite`,

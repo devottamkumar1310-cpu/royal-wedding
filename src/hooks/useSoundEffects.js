@@ -8,13 +8,13 @@ const AUDIO_ENABLED   = true;
 
 // Volume per sound type — tuned for luxury feel (nothing jarring)
 const VOLUMES = {
-  waxCrack:    0.20,   // envelope wax seal crack — subtle
-  paperUnfold: 0.22,   // paper unfold — soft
-  scratchLoop: 0.13,   // looping scratch — quiet background texture
-  chime:       0.18,   // enter screen chime
-  reveal:      0.32,   // scratch reveal success — slightly louder, celebratory
-  confettiBurst: 0.28, // confetti pop (pre-wired — drops silently if file missing)
-  whoosh:      0.22,   // cinematic transition whoosh (pre-wired — drops silently)
+  waxCrack:    0.04,   // envelope wax seal crack / click — subtle
+  paperUnfold: 0.05,   // paper unfold — soft
+  scratchLoop: 0.025,  // looping scratch — quiet background texture
+  chime:       0.04,   // enter screen chime
+  reveal:      0.08,   // scratch reveal success — slightly louder, celebratory
+  confettiBurst: 0.06, // confetti pop
+  whoosh:      0.05,   // transition whoosh
 };
 
 export const useSoundEffects = () => {

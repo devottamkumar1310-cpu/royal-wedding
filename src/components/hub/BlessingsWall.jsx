@@ -127,7 +127,10 @@ const BlessingsWall = () => {
       transition={{ duration: 0.6 }}
       className="w-full flex flex-col items-center pb-32 pt-4 px-4"
     >
-      <h2 className="font-serif text-center mb-16 uppercase tracking-[0.32em] font-light text-transparent bg-gradient-to-b from-[#FFF0D0] via-[#D4AF37] to-[#B38728] bg-clip-text drop-shadow-[0_1.5px_2.5px_rgba(0,0,0,0.9)] text-2xl md:text-3xl">
+      <h2 
+        className="font-greatvibes text-center mb-16 text-5xl font-normal"
+        style={{ color: '#A95A1B' }}
+      >
         Wall of Blessings
       </h2>
 
@@ -138,7 +141,8 @@ const BlessingsWall = () => {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="mb-6 px-6 py-3 bg-champagne-gold/10 border border-champagne-gold/40 text-champagne-gold text-sm tracking-wider rounded-sm"
+            className="mb-6 px-6 py-3 bg-[#A95A1B]/10 border border-[#A95A1B]/30 text-sm tracking-wider rounded-sm font-lato"
+            style={{ color: '#7A3F14' }}
           >
             ✦ Your blessing has been shared.
           </motion.div>
@@ -147,19 +151,19 @@ const BlessingsWall = () => {
 
       {/* Fetch error */}
       {fetchError && (
-        <p className="mb-6 text-sm text-red-400/80 text-center">{fetchError}</p>
+        <p className="mb-6 text-sm text-red-500/80 text-center font-lato">{fetchError}</p>
       )}
 
-      {/* Blessings grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+      {/* Blessings grid - reduced max-width to shrink cards by ~20% */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
         {loading && (
-          <div className="col-span-full py-12 text-center text-champagne-gold animate-pulse">
+          <div className="col-span-full py-12 text-center text-[#D4922A] animate-pulse font-lato">
             Loading blessings…
           </div>
         )}
 
         {!loading && wishes.length === 0 && !fetchError && (
-          <div className="col-span-full py-12 text-center text-ivory/50">
+          <div className="col-span-full py-12 text-center text-[#5C3F2A]/50 font-lato font-light">
             Be the first to leave a blessing.
           </div>
         )}
@@ -171,19 +175,68 @@ const BlessingsWall = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-20px' }}
             transition={{ duration: 0.6, delay: Math.min(index * 0.08, 0.4) }}
-            className={`bg-royal-blue/20 backdrop-blur-md border-l-4 border-champagne-gold p-6 shadow-lg hover:bg-royal-blue/40 transition-colors duration-300 rounded-r-lg${
+            className={`p-4 md:p-5 shadow-[0_12px_30px_rgba(80,50,20,0.10)] hover:shadow-[0_18px_40px_rgba(80,50,20,0.14)] transition-all duration-500 rounded-lg relative overflow-hidden bg-[#F5EBDD] border border-[#C89B5A]/15 flex flex-col items-center justify-center text-center hover:shadow-[0_20px_50px_rgba(40,30,20,0.09)] transition-all duration-500 rounded-sm relative overflow-hidden bg-[#F8F1E7] flex flex-col items-center justify-center text-center${
               wish._optimistic ? ' opacity-70' : ''
             }`}
           >
-            <p className="text-ivory/90 font-display italic text-base md:text-lg leading-relaxed mb-4">"{wish.message}"</p>
-            <p className="text-champagne-gold font-serif text-xs tracking-[0.18em] text-right font-light uppercase">
-              — {wish.guest_name}
-            </p>
-            {wish.created_at && (
-              <p className="text-ivory/40 font-sans text-[10px] text-right mt-1">
-                {formatDate(wish.created_at)}
-              </p>
-            )}
+            {/* Soft cotton paper texture grain */}
+            <div 
+              className="absolute inset-0 pointer-events-none opacity-[0.18] z-0 mix-blend-multiply"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
+              }}
+            />
+
+            {/* Single delicate botanical accent (bottom-left) */}
+            <svg className="absolute bottom-3 left-3 w-20 h-20 opacity-[0.45] pointer-events-none z-0" viewBox="0 0 100 100" fill="none" stroke="#B76E2B" strokeWidth="0.75">
+              <path d="M10,90 Q40,90 45,50 T90,10" strokeLinecap="round" />
+              <path d="M45,50 Q60,30 80,40 Q65,60 45,50" fill="#B76E2B" fillOpacity="0.15" />
+              <path d="M30,70 Q40,50 60,60 Q45,80 30,70" fill="#B76E2B" fillOpacity="0.15" />
+              <path d="M20,80 Q25,65 40,70 Q30,85 20,80" fill="#B76E2B" fillOpacity="0.15" />
+            </svg>
+
+            <div className="relative z-10 flex flex-col items-center justify-center h-full w-full max-w-[90%] mx-auto">
+              {/* The Hero: The Blessing Quote */}
+              <div className="relative mb-6 mt-4 w-full">
+                {/* Oversized Top-Left Quote */}
+                <span 
+                  className="absolute -top-6 -left-2 md:-left-4 font-serif text-5xl md:text-6xl leading-none select-none"
+                  style={{ color: '#B76E2B', opacity: 0.35 }}
+                >
+                  “
+                </span>
+                
+                <p 
+                  className="font-cormorant text-xl md:text-2xl leading-[1.6] font-medium relative z-10" 
+                  style={{ color: '#7A3F14', textShadow: '0 1px 1px rgba(255,255,255,0.8)' }}
+                >
+                  {wish.message}
+                </p>
+
+                {/* Oversized Bottom-Right Quote */}
+                <span 
+                  className="absolute -bottom-8 -right-2 md:-right-4 font-serif text-5xl md:text-6xl leading-none select-none"
+                  style={{ color: '#B76E2B', opacity: 0.35 }}
+                >
+                  ”
+                </span>
+              </div>
+
+              {/* Signature Area */}
+              <div className="mt-2 flex flex-col items-center">
+                <p 
+                  className="font-greatvibes text-3xl md:text-4xl tracking-wide whitespace-nowrap"
+                  style={{ color: '#7A3F14' }}
+                >
+                  {wish.guest_name}
+                </p>
+                {wish.created_at && (
+                  <p className="font-lato font-light text-[9px] md:text-[10px] uppercase tracking-[0.25em] mt-1 whitespace-nowrap" style={{ color: 'rgba(107, 53, 16, 0.65)' }}>
+                    {formatDate(wish.created_at)}
+                  </p>
+                )}
+              </div>
+            </div>
           </motion.div>
         ))}
       </div>
@@ -195,9 +248,9 @@ const BlessingsWall = () => {
             <motion.div key="button" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <MagneticButton
                 onClick={() => setShowForm(true)}
-                className="px-8 py-3 bg-royal-blue/60 backdrop-blur-md border border-champagne-gold text-champagne-gold uppercase tracking-[0.2em] text-sm hover:bg-champagne-gold hover:text-royal-blue transition-colors duration-500 rounded-sm shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+                className="btn-luxury px-8 py-3 uppercase tracking-[0.2em] shadow-luxe-medium hover:shadow-luxe-strong transition-all duration-300 rounded-sm relative font-medium"
               >
-                Leave a Blessing
+                <span className="relative z-10">Leave a Blessing</span>
               </MagneticButton>
             </motion.div>
           ) : (
@@ -207,9 +260,20 @@ const BlessingsWall = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
               onSubmit={handleSubmit}
-              className="w-full bg-royal-blue/40 backdrop-blur-xl border border-champagne-gold/30 p-8 shadow-[0_0_40px_rgba(212,175,55,0.15)] rounded-sm"
+              className="relative w-full p-8 shadow-luxe-medium rounded-sm bg-[#F8F1E7] border border-[#A95A1B]/10 overflow-hidden"
             >
-              <h3 className="text-champagne-gold font-serif text-xl text-center mb-6 uppercase tracking-widest">
+              {/* Fine paper grain overlay */}
+              <div 
+                className="absolute inset-0 pointer-events-none opacity-[0.18] z-0 mix-blend-overlay"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
+                }}
+              />
+
+              <h3 
+                className="font-cormorant font-semibold text-lg text-center mb-6 uppercase tracking-widest relative z-10"
+                style={{ color: '#A95A1B' }}
+              >
                 Share Your Joy
               </h3>
 
@@ -219,7 +283,7 @@ const BlessingsWall = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full bg-black/20 border-b border-champagne-gold/30 p-3 text-ivory outline-none focus:border-champagne-gold transition-colors mb-4 placeholder:text-ivory/30"
+                className="relative z-10 w-full bg-white border border-[#E0E0E0] p-3 text-[#5C3F2A] outline-none focus:border-[#D4922A] transition-colors mb-4 placeholder:text-[#5C3F2A]/45 rounded-md font-lato font-light"
               />
               <textarea
                 placeholder="Your Blessing…"
@@ -227,7 +291,7 @@ const BlessingsWall = () => {
                 onChange={(e) => setMessage(e.target.value)}
                 required
                 rows={4}
-                className="w-full bg-black/20 border border-champagne-gold/30 p-3 text-ivory outline-none focus:border-champagne-gold transition-colors mb-4 placeholder:text-ivory/30 resize-none"
+                className="relative z-10 w-full bg-white border border-[#E0E0E0] p-3 text-[#5C3F2A] outline-none focus:border-[#D4922A] transition-colors mb-4 placeholder:text-[#5C3F2A]/45 resize-none rounded-md font-lato font-light"
               />
 
               {/* Inline submit error */}
@@ -235,25 +299,25 @@ const BlessingsWall = () => {
                 <motion.p
                   initial={{ opacity: 0, y: -4 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-sm text-red-400/90 text-center py-2 border border-red-400/20 rounded px-3 bg-red-400/5 mb-4"
+                  className="relative z-10 text-sm text-red-500/90 text-center py-2 border border-red-500/20 rounded px-3 bg-red-500/5 mb-4 font-lato font-light"
                 >
                   {submitError}
                 </motion.p>
               )}
 
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 relative z-10">
                 <button
                   type="button"
                   onClick={() => { setShowForm(false); setSubmitError(''); }}
-                  className="flex-1 py-3 text-ivory/70 uppercase tracking-widest text-xs hover:text-ivory transition-colors"
+                  className="flex-1 py-3 text-[#5C3F2A]/70 uppercase tracking-widest text-xs hover:text-[#5C3F2A] transition-colors font-lato font-normal"
                 >
                   Cancel
                 </button>
                 <MagneticButton
                   type="submit"
-                  className="flex-1 py-3 bg-champagne-gold text-royal-blue uppercase tracking-widest text-xs font-semibold hover:bg-ivory transition-colors duration-500"
+                  className="btn-luxury flex-1 py-3 uppercase tracking-widest shadow-luxe-medium hover:shadow-luxe-strong transition-all duration-300 relative"
                 >
-                  {submitting ? 'Sending…' : 'Submit'}
+                  <span className="relative z-10">{submitting ? 'Sending…' : 'Submit'}</span>
                 </MagneticButton>
               </div>
             </motion.form>

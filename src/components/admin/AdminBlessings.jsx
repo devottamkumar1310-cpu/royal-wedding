@@ -38,9 +38,9 @@ const AdminBlessings = () => {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-serif text-champagne-gold uppercase tracking-widest">Manage Blessings</h1>
-      <div className="bg-royal-blue/40 border border-champagne-gold/20 rounded shadow-lg overflow-hidden">
-        <table className="w-full text-left text-sm text-ivory/80">
-          <thead className="bg-black/20 text-champagne-gold uppercase tracking-wider text-xs">
+      <div className="bg-stationery-gradient border border-[#FFC300] rounded shadow-luxe-strong overflow-hidden">
+        <table className="w-full text-left text-sm text-[#F8F4E8]/80">
+          <thead className="bg-card-blue-dark text-champagne-gold uppercase tracking-wider text-xs">
             <tr>
               <th className="px-6 py-4">Guest Name</th>
               <th className="px-6 py-4">Message</th>
@@ -50,7 +50,7 @@ const AdminBlessings = () => {
           </thead>
           <tbody className="divide-y divide-champagne-gold/10">
             {blessings.map((b) => (
-              <tr key={b.id} className="hover:bg-white/5 transition-colors">
+              <tr key={b.id} className="hover:bg-stationery-gradient/5 transition-colors">
                 <td className="px-6 py-4 font-semibold">{b.guest_name}</td>
                 <td className="px-6 py-4 max-w-xs truncate">{b.message}</td>
                 <td className="px-6 py-4">
@@ -65,7 +65,7 @@ const AdminBlessings = () => {
             ))}
             {blessings.length === 0 && (
               <tr>
-                <td colSpan="4" className="px-6 py-8 text-center text-ivory/50">No blessings received yet.</td>
+                <td colSpan="4" className="px-6 py-8 text-center text-[#F8F4E8]/50">No blessings received yet.</td>
               </tr>
             )}
           </tbody>
@@ -76,3 +76,4 @@ const AdminBlessings = () => {
 };
 
 export default AdminBlessings;
+

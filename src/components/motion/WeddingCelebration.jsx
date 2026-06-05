@@ -98,13 +98,13 @@ const GOLD_BURST = Array.from({ length: 28 }, (_, i) => {
     x:    Math.cos(angle) * dist,
     y:    Math.sin(angle) * dist,
     size: 5 + (i % 4) * 3,
-    col:  ['#D4AF37', '#F3E5AB', '#B76E79', '#EDD080'][i % 4],
+    col:  ['#FFC300', '#F3E5AB', '#B76E79', '#EDD080'][i % 4],
   };
 });
 
 // 65 pieces — tight 1.2s spread = strong celebratory burst
 // Rose-gold #B76E79 added as requested
-const CONFETTI_COLORS = ['#D4AF37', '#F3E5AB', '#E8DFC8', '#C7D7B5', '#B76E79', '#EDD080', '#FDFBF7'];
+const CONFETTI_COLORS = ['#FFC300', '#F3E5AB', '#E8DFC8', '#C7D7B5', '#B76E79', '#EDD080', '#5FA8D3'];
 const CONFETTI = Array.from({ length: 65 }, (_, i) => ({
   id:       i,
   color:    CONFETTI_COLORS[i % CONFETTI_COLORS.length],
@@ -128,13 +128,13 @@ const LIGHTS = Array.from({ length: 11 }, (_, i) => ({
 // 8 balloons — INFINITE loop (not one-shot)
 // All balloons start at 110vh and end at -20vh seamlessly
 const BALLOONS = [
-  { left: '5%',  size: 46, delay: 0.0,  dur: 14.5, path: 'Slow', col: '#D4AF37', glow: 'rgba(212,175,55,0.32)' },
+  { left: '5%',  size: 46, delay: 0.0,  dur: 14.5, path: 'Slow', col: '#FFC300', glow: 'rgba(212,175,55,0.32)' },
   { left: '16%', size: 34, delay: 2.4,  dur: 10.5, path: 'Mid',  col: '#F3E5AB', glow: 'rgba(243,229,171,0.26)' },
-  { left: '29%', size: 28, delay: 0.8,  dur:  8.5, path: 'Fast', col: '#FDFBF7', glow: 'rgba(253,251,247,0.22)' },
+  { left: '29%', size: 28, delay: 0.8,  dur:  8.5, path: 'Fast', col: '#5FA8D3', glow: 'rgba(253,251,247,0.22)' },
   { left: '42%', size: 52, delay: 1.6,  dur: 15.0, path: 'Slow', col: '#E8DFC8', glow: 'rgba(232,223,200,0.24)' },
   { left: '56%', size: 36, delay: 0.4,  dur: 11.0, path: 'Mid',  col: '#C7D7B5', glow: 'rgba(199,215,181,0.26)' },
   { left: '70%', size: 26, delay: 3.2,  dur:  9.0, path: 'Fast', col: '#F3E5AB', glow: 'rgba(243,229,171,0.22)' },
-  { left: '81%', size: 44, delay: 1.0,  dur: 13.5, path: 'Slow', col: '#D4AF37', glow: 'rgba(212,175,55,0.30)' },
+  { left: '81%', size: 44, delay: 1.0,  dur: 13.5, path: 'Slow', col: '#FFC300', glow: 'rgba(212,175,55,0.30)' },
   { left: '93%', size: 30, delay: 5.5,  dur: 10.0, path: 'Mid',  col: '#E8DFC8', glow: 'rgba(232,223,200,0.20)' },
 ];
 

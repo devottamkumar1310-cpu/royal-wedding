@@ -1,6 +1,5 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
 
 const TiltFrame = ({ frame, index }) => {
   const x = useMotionValue(0);
@@ -34,69 +33,75 @@ const TiltFrame = ({ frame, index }) => {
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ duration: 0.6, delay: (index % 4) * 0.1 }}
       className="perspective-1000 w-full"
     >
       <motion.div
-        className="group relative w-full aspect-square md:aspect-[4/3] rounded overflow-hidden border-2 border-champagne-gold/40 hover:border-champagne-gold cursor-pointer transition-colors duration-500 shadow-[0_15px_30px_rgba(0,0,0,0.5)]"
+        className="group relative w-full aspect-square md:aspect-[4/3] bg-stationery-gradient p-3 md:p-4 shadow-luxe-medium hover:shadow-[0_16px_30px_rgba(0,0,0,0.06)] cursor-pointer transition-all duration-500 rounded-sm"
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Fluid Gradient Background (Fallback) */}
-        {!frame.publicUrl && (
-          <motion.div 
-            className="absolute inset-0"
-            style={{
-              background: frame.bg,
-              backgroundSize: '200% 200%'
-            }}
-            animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          />
-        )}
+        {/* Inner photo container */}
+        <div className="relative w-full h-full overflow-hidden bg-white rounded-sm">
+          {/* Fluid Gradient Background (Fallback) */}
+          {!frame.publicUrl && (
+            <motion.div 
+              className="absolute inset-0"
+              style={{
+                background: frame.bg || 'linear-gradient(135deg, #E2EDDE, #F4FBF0, #E2EDDE)',
+                backgroundSize: '200% 200%'
+              }}
+              animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            />
+          )}
 
-        {/* Real Image */}
-        {frame.publicUrl && (
-          <div className="absolute inset-0">
-            <img src={frame.publicUrl} alt={frame.title} loading="lazy" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
-          </div>
-        )}
+          {/* Real Image */}
+          {frame.publicUrl && (
+            <div className="absolute inset-0 w-full h-full">
+              <img src={frame.publicUrl} alt={frame.title} loading="lazy" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-[#5C3F2A]/5 group-hover:bg-[#5C3F2A]/0 transition-colors duration-500" />
+            </div>
+          )}
 
-        {/* Abstract placeholder for images - maintaining luxury feel */}
-        {!frame.publicUrl && (
-          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none" style={{ transform: "translateZ(30px)" }}>
-             <div className="w-24 h-24 border border-champagne-gold/30 rounded-full flex items-center justify-center opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 shadow-inner">
-               <div className="w-16 h-16 border border-champagne-gold/50 rounded-full flex items-center justify-center bg-royal-blue/30 backdrop-blur-sm">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1">
-                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                     <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                     <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
+          {/* Abstract placeholder for images - maintaining luxury feel */}
+          {!frame.publicUrl && (
+            <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none" style={{ transform: "translateZ(30px)" }}>
+               <div className="w-16 h-16 border border-[#B2C9A7]/30 rounded-full flex items-center justify-center opacity-40 group-hover:opacity-85 group-hover:scale-105 transition-all duration-700 shadow-inner">
+                  <div className="w-12 h-12 border border-[#B2C9A7]/50 rounded-full flex items-center justify-center bg-[#EDF5E9] backdrop-blur-sm">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4922A" strokeWidth="1">
+                       <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                       <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                       <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                  </div>
                </div>
-             </div>
-          </div>
-        )}
+            </div>
+          )}
 
-        {/* Dynamic Metallic Glare */}
-        <motion.div 
-          className="absolute inset-0 z-20 pointer-events-none mix-blend-overlay opacity-0 group-hover:opacity-60 transition-opacity duration-500"
-          style={{
-            background: `radial-gradient(circle at center, rgba(255,255,255,0.6) 0%, transparent 60%)`,
-            left: glareX,
-            top: glareY,
-            transform: 'translate(-50%, -50%)',
-            width: '200%',
-            height: '200%'
-          }}
-        />
-        
-        {/* Hover overlay text */}
-        <div className="absolute inset-0 bg-royal-blue/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-sm z-30" style={{ transform: "translateZ(50px)" }}>
-          <h3 className="text-champagne-gold font-serif text-xl md:text-2xl tracking-widest uppercase translate-y-4 group-hover:translate-y-0 transition-transform duration-500 drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]">
-            {frame.title}
-          </h3>
+          {/* Dynamic Metallic Glare */}
+          <motion.div 
+            className="absolute inset-0 z-20 pointer-events-none mix-blend-overlay opacity-0 group-hover:opacity-40 transition-opacity duration-500"
+            style={{
+              background: `radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 60%)`,
+              left: glareX,
+              top: glareY,
+              transform: 'translate(-50%, -50%)',
+              width: '200%',
+              height: '200%'
+            }}
+          />
+          
+          {/* Hover overlay text */}
+          <div className="absolute inset-3 bg-stationery-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center backdrop-blur-sm z-30 shadow-luxe-medium" style={{ transform: "translateZ(40px)" }}>
+            <h3 className="text-rose-accent font-greatvibes text-2xl md:text-3xl mb-1 translate-y-3 group-hover:translate-y-0 transition-transform duration-500">
+              {frame.title}
+            </h3>
+            <p className="text-[#D4922A] font-cormorant italic text-xs tracking-wider uppercase translate-y-3 group-hover:translate-y-0 transition-transform duration-500 delay-75">
+              Wedding Memory
+            </p>
+          </div>
         </div>
       </motion.div>
     </motion.div>
@@ -104,42 +109,43 @@ const TiltFrame = ({ frame, index }) => {
 };
 
 const MemoriesGallery = () => {
-  const [frames, setFrames] = useState([]);
+  const [folders, setFolders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fallbackFrames = [
-    { id: 1, title: 'Engagement', bg: 'linear-gradient(135deg, #071e2c, #0B3046, #12405a)' },
-    { id: 2, title: 'Pre-Wedding', bg: 'linear-gradient(45deg, #0B3046, #071e2c, #0d2b3b)' },
-    { id: 3, title: 'Haldi Highlights', bg: 'linear-gradient(225deg, #071e2c, #0d2b3b, #0B3046)' },
-    { id: 4, title: 'Family Moments', bg: 'linear-gradient(315deg, #0B3046, #071e2c, #12405a)' }
-  ];
+  const scriptUrl = import.meta.env.VITE_GOOGLE_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbyuX6fJn9h41iXZWxbaxzjBz0aGZ_7z9UmmKMnpvjQSXAReKC6U5CcZxutouazCr3iz/exec";
+  const driveRootId = import.meta.env.VITE_DRIVE_FOLDER_ID || "1fcHs_FnyV-sMolypjj7wul7H8yRmahgs";
 
   useEffect(() => {
-    fetchGallery();
-  }, []);
+    if(scriptUrl && driveRootId) fetchGallery();
+    else setLoading(false);
+  }, [scriptUrl, driveRootId]);
 
   const fetchGallery = async () => {
-    const { data, error } = await supabase
-      .from('gallery')
-      .select('*')
-      .order('sort_order', { ascending: true })
-      .order('created_at', { ascending: false });
+    try {
+      const res = await fetch(`${scriptUrl}?action=list&folderId=${driveRootId}`);
+      const text = await res.text();
+      console.log("Raw Response:", text);
+      
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error("JSON parse error:", e);
+      }
 
-    if (!error && data && data.length > 0) {
-      const mapped = data.map(item => {
-        const { data: publicData } = supabase.storage.from('gallery-images').getPublicUrl(item.storage_path);
-        return {
-          id: item.id,
-          title: item.category || 'Memory',
-          publicUrl: publicData.publicUrl
-        };
-      });
-      setFrames(mapped);
-    } else {
-      setFrames(fallbackFrames);
+      console.log('Gallery API Response:', data);
+      
+      if (data && data.success && data.folders) {
+        setFolders(data.folders);
+      }
+    } catch (e) {
+      console.error("Fetch error:", e);
     }
     setLoading(false);
   };
+
+  const totalImages = folders.reduce((sum, f) => sum + (f.images?.length || 0), 0);
+  console.log("React Render Path -> folders.length:", folders.length, "images.length:", totalImages);
 
   return (
     <motion.div 
@@ -150,15 +156,47 @@ const MemoriesGallery = () => {
       transition={{ duration: 0.8 }}
       className="w-full flex flex-col items-center pb-32 pt-4 px-6"
     >
-      <h2 className="font-serif text-center mb-16 uppercase tracking-[0.32em] font-light text-transparent bg-gradient-to-b from-[#FFF0D0] via-[#D4AF37] to-[#B38728] bg-clip-text drop-shadow-[0_1.5px_2.5px_rgba(0,0,0,0.9)] text-2xl md:text-3xl">
+      <h2 className="font-greatvibes text-center mb-16 text-rose-accent text-4xl font-normal">
         Royal Memories
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
-        {frames.map((frame, index) => (
-          <TiltFrame key={frame.id} frame={frame} index={index} />
-        ))}
-      </div>
+      {loading && (
+        <div className="text-[#D4922A] tracking-widest uppercase text-xs font-lato">Loading memories...</div>
+      )}
+
+      {!loading && folders.length === 0 && (
+        <div className="text-[#5C3F2A]/50 mt-10 tracking-widest uppercase text-xs font-lato font-light">
+          No photos available yet
+        </div>
+      )}
+
+      {!loading && folders.map((folder, folderIndex) => {
+        if (!folder.images || folder.images.length === 0) return null;
+        
+        return (
+          <section key={folder.id} className="w-full max-w-4xl mb-24 last:mb-0">
+            {/* Premium Section Heading */}
+            <div className="flex flex-col items-center mb-12">
+              <h3 className="font-cormorant text-rose-accent text-xl md:text-2xl tracking-[0.15em] uppercase mb-4 text-center font-semibold">
+                {folder.name}
+              </h3>
+              <div className="flex items-center w-full max-w-xs opacity-30">
+                <div className="h-[1px] bg-gradient-to-r from-transparent via-[#B2C9A7] to-transparent w-full" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+              {folder.images.map((img, index) => (
+                <TiltFrame 
+                  key={img.id} 
+                  frame={{ id: img.id, title: folder.name, publicUrl: img.thumbnail }} 
+                  index={index} 
+                />
+              ))}
+            </div>
+          </section>
+        );
+      })}
     </motion.div>
   );
 };

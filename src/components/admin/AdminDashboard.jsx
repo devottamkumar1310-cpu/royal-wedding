@@ -55,31 +55,31 @@ const AdminDashboard = () => {
       <h1 className="text-3xl font-serif text-champagne-gold uppercase tracking-widest">Dashboard Overview</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-royal-blue/40 border border-champagne-gold/20 p-6 rounded shadow-lg">
-          <h3 className="text-ivory/60 uppercase tracking-widest text-xs mb-2">Total RSVPs</h3>
+        <div className="bg-stationery-gradient border border-[#FFC300] p-6 rounded shadow-luxe-strong">
+          <h3 className="text-[#F8F4E8]/60 uppercase tracking-widest text-xs mb-2">Total RSVPs</h3>
           <p className="text-4xl text-champagne-gold font-serif">{stats.totalRsvps}</p>
         </div>
-        <div className="bg-royal-blue/40 border border-champagne-gold/20 p-6 rounded shadow-lg">
-          <h3 className="text-ivory/60 uppercase tracking-widest text-xs mb-2">Total Attending</h3>
+        <div className="bg-stationery-gradient border border-[#FFC300] p-6 rounded shadow-luxe-strong">
+          <h3 className="text-[#F8F4E8]/60 uppercase tracking-widest text-xs mb-2">Total Attending</h3>
           <p className="text-4xl text-green-400 font-serif">{stats.attending}</p>
         </div>
-        <div className="bg-royal-blue/40 border border-champagne-gold/20 p-6 rounded shadow-lg">
-          <h3 className="text-ivory/60 uppercase tracking-widest text-xs mb-2">Not Attending</h3>
+        <div className="bg-stationery-gradient border border-[#FFC300] p-6 rounded shadow-luxe-strong">
+          <h3 className="text-[#F8F4E8]/60 uppercase tracking-widest text-xs mb-2">Not Attending</h3>
           <p className="text-4xl text-red-400 font-serif">{stats.notAttending}</p>
         </div>
-        <div className="bg-royal-blue/40 border border-champagne-gold/20 p-6 rounded shadow-lg">
-          <h3 className="text-ivory/60 uppercase tracking-widest text-xs mb-2">Total Guests</h3>
+        <div className="bg-stationery-gradient border border-[#FFC300] p-6 rounded shadow-luxe-strong">
+          <h3 className="text-[#F8F4E8]/60 uppercase tracking-widest text-xs mb-2">Total Guests</h3>
           <p className="text-4xl text-champagne-gold font-serif">{stats.guestCount}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-royal-blue/40 border border-champagne-gold/20 p-6 rounded shadow-lg">
-          <h3 className="text-ivory/60 uppercase tracking-widest text-xs mb-2">Pending Blessings</h3>
+        <div className="bg-stationery-gradient border border-[#FFC300] p-6 rounded shadow-luxe-strong">
+          <h3 className="text-[#F8F4E8]/60 uppercase tracking-widest text-xs mb-2">Pending Blessings</h3>
           <p className="text-4xl text-champagne-gold font-serif">{stats.pendingBlessings}</p>
         </div>
-        <div className="bg-royal-blue/40 border border-champagne-gold/20 p-6 rounded shadow-lg">
-          <h3 className="text-ivory/60 uppercase tracking-widest text-xs mb-2">Gallery Photos</h3>
+        <div className="bg-stationery-gradient border border-[#FFC300] p-6 rounded shadow-luxe-strong">
+          <h3 className="text-[#F8F4E8]/60 uppercase tracking-widest text-xs mb-2">Gallery Photos</h3>
           <p className="text-4xl text-champagne-gold font-serif">{stats.galleryPhotos}</p>
         </div>
       </div>

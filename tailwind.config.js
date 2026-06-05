@@ -7,30 +7,67 @@ export default {
   theme: {
     extend: {
       colors: {
-        'royal-blue':      '#081826',
-        'champagne-gold':  '#D4AF37',
-        'ivory':           '#E8DFC8',
-        'pearl':           '#FDFBF7',
-        'sage':            '#C7D7B5',
-        'pistachio':       '#BFC8A8',
+        // ── New Garden Design System Tokens ──────────────────────────────────────
+        'background-blue': '#EDF5E9', // Soft sage green remapped
+        'card-blue-light': '#FDF9F6', // Soft cream remapped
+        'card-blue-mid':   '#FFFFFF',
+        'card-blue-dark':  '#EDF5E9',
+        'matte-gold':      '#D4922A', // Accent Gold
+        'body-dark':       '#5C3F2A', // Muted brown remapped
+        'warm-ivory':      '#FDF9F6', // Cream remapped
+        'rose-accent':     '#C45B7A', // Rose accent
+        'sacred-gold':     '#B8832A', // Sacred gold
+
+        // ── Primary Background (remapped) ───────────────────────────────────
+        'royal-blue':      '#EDF5E9',
+        // ── Card System (remapped to card-blue tokens) ──────────────────────
+        'emerald-dark':    '#FFFFFF',
+        'emerald-mid':     '#FDF9F6',
+        'emerald-light':   '#FFFFFF',
+        // ── Gold Accent ──────────────────────────────────────────────────────
+        'champagne-gold':  '#D4922A',
+        // ── Typography (remapped to new tokens) ──────────────────────────────
+        'ivory-text':      '#5C3F2A',
+        'deep-green':      '#5C3F2A',
+        // ── Legacy aliases ───────────────────────────────────────────────────
+        'ivory':           '#5C3F2A',
+        'ivory-cream':     '#EDF5E9',
+        'pearl':           '#FDF9F6',
+        'warm-cream':      '#FDF9F6',
+        'sage-tint':       '#EDF5E9',
+        'soft-blush':      '#FDF9F6',
+        'muted-charcoal':  '#5C3F2A',
+        'matte-gold-warm': '#D4922A',
+        // ── Decorative ───────────────────────────────────────────────────────
+        'dusty-blue':      '#B2C9A7',
+        'sage-green':      '#B2C9A7',
+        'sage':            '#EDF5E9',
+        'pistachio':       '#B2C9A7',
+        // ── Old navy tokens ──────────────────────────────────────────────────
+        'navy-light':      '#FDF9F6',
+        'navy-mid':        '#FDF9F6',
+        'navy-dark':       '#EDF5E9',
       },
       fontFamily: {
-        // English display — Cinzel for headings, Cormorant for body serif
-        serif:       ['Cinzel', 'serif'],
-        display:     ['Cormorant Garamond', 'Cinzel', 'serif'],
-        // Hindi ceremonial — Tiro Devanagari Hindi (premium, book-quality)
-        // Falls back to Yatra One (decorative) if not loaded
-        hindi:       ['Tiro Devanagari Hindi', 'Yatra One', 'serif'],
-        // UI sans
-        sans:        ['Montserrat', 'sans-serif'],
+        greatvibes: ['"Great Vibes"', 'cursive'],
+        cormorant: ['"Cormorant Garamond"', 'serif'],
+        lato: ['Lato', 'sans-serif'],
+        sans:    ['Lato', 'sans-serif'],
+        serif:   ['"Cormorant Garamond"', 'serif'],
+        display: ['"Great Vibes"', 'cursive'],
+        hindi:   ['"Cormorant Garamond"', 'serif'], // Fallback for hindi text to look elegant
       },
       letterSpacing: {
-        // Extra tracking for luxury label text
         'ceremony': '0.22em',
         'luxe':     '0.30em',
       },
       lineHeight: {
         'relaxed-hindi': '2.0',
+      },
+      boxShadow: {
+        'luxe-light':  '0 4px 12px rgba(0,0,0,0.08)',
+        'luxe-medium': '0 12px 30px rgba(0,0,0,0.12)',
+        'luxe-strong': '0 18px 40px rgba(0,0,0,0.16)',
       },
     },
   },

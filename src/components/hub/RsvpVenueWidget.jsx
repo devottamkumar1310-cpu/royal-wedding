@@ -1,0 +1,1 @@
+console.log("ENV URL:", import.meta.env.VITE_GOOGLE_SCRIPT_URL);

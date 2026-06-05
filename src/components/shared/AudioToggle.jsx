@@ -10,7 +10,7 @@ const AudioToggle = () => {
   return (
     <button
       onClick={toggleMute}
-      className="fixed top-6 right-6 z-[100] w-10 h-10 md:w-12 md:h-12 bg-royal-blue/60 backdrop-blur-md border border-champagne-gold/50 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.2)] hover:scale-110 hover:border-champagne-gold transition-all duration-300"
+      className="fixed top-6 right-6 z-[100] w-10 h-10 md:w-12 md:h-12 bg-stationery-gradient backdrop-blur-md border border-[#FFC300] rounded-full flex items-center justify-center shadow-luxe-light hover:scale-110 hover:border-[#FFC300] transition-all duration-300"
       aria-label={isMuted ? "Unmute sound" : "Mute sound"}
     >
       {isMuted ? (

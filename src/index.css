@@ -9,15 +9,133 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* Lock the body to prevent any accidental bouncing or scrolling */
-body {
-  background-color: #081826;
-  color: #E8DFC8;
-  overflow-x: hidden; 
+/* ─── Global Background ──────────────────────────────────────────────────────
+   Every screen and page wrapper inherits this light-blue gradient.
+   60% of visual weight = sky blue.
+*/
+body, html {
+  background: #EDF5E9;
+  color: #5C3F2A;
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
+}
+
+/* Subtle paper-grain texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+@layer utilities {
+
+  /* ── Cream Stationery Card background ───────────────────────────────────
+     Used on: ALL cards, nav pill, admin panels.
+  */
+  .bg-stationery-gradient {
+    background: #FDF9F6;
+    color: #5C3F2A;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Subtle paper-grain overlay on all cards */
+  .bg-stationery-gradient::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.02;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    border-radius: inherit;
+    z-index: 10;
+  }
+
+  /* Envelope remains Emerald/Sage Green */
+  .bg-emerald-gradient {
+    background-image: linear-gradient(135deg, #B2C9A7, #9DB893);
+  }
+
+  /* Light green background helper — matches body */
+  .bg-site-blue {
+    background: #EDF5E9;
+  }
+
+  /* ── Accent Gold Typography ───────────────────────────────────────────────────────
+  */
+  .text-luxe-gold {
+    color: #D4922A;
+  }
+
+  /* Body text on light sections */
+  .text-luxe-charcoal {
+    color: #5C3F2A;
+  }
+
+  /* Body text on cards */
+  .text-card-body {
+    color: #5C3F2A;
+  }
+
+  /* ── Paper texture for CTA buttons ────────────────────────────────────────── */
+  .texture-paper {
+    position: relative;
+  }
+  .texture-paper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    border-radius: inherit;
+    z-index: 20;
+  }
+
+  /* ── Global Luxury Button class ────────────────────────────────────────── */
+  .btn-luxury {
+    background: #D4922A !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 6px !important;
+    font-family: 'Great Vibes', cursive !important;
+    font-style: italic !important;
+    font-size: 21px !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    transition: all 0.3s ease !important;
+  }
+  .btn-luxury *, .btn-luxury span {
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    font-family: 'Great Vibes', cursive !important;
+    font-style: italic !important;
+  }
+  .btn-luxury:hover {
+    background: #B8832A !important;
+    transform: translateY(-1px) !important;
+  }
+}
+
+/* ── Background Breathing Animation ── */
+@keyframes bgBreathe {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.025) translate(1px, -1px); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+.bg-breathing {
+  animation: bgBreathe 50s ease-in-out infinite;
+  will-change: transform;
 }

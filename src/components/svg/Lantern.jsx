@@ -25,14 +25,14 @@ const Lantern = ({ className = "", width = "60", height = "120", delay = 0 }) =>
       <defs>
         {/* F1: IDs are now unique per Lantern instance */}
         <linearGradient id={metalId} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stopColor="#8c7322" />
-          <stop offset="50%"  stopColor="#F3E5AB" />
-          <stop offset="100%" stopColor="#8c7322" />
+          <stop offset="0%"   stopColor="#FFC300" />
+          <stop offset="50%"  stopColor="#5FA8D3" />
+          <stop offset="100%" stopColor="#FFC300" />
         </linearGradient>
         <radialGradient id={glowId} cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   stopColor="rgba(255, 230, 150, 1)" />
-          <stop offset="50%"  stopColor="rgba(255, 200, 100, 0.6)" />
-          <stop offset="100%" stopColor="rgba(212, 175, 55, 0)" />
+          <stop offset="0%"   stopColor="rgba(255, 248, 230, 1)" />
+          <stop offset="50%"  stopColor="rgba(253, 251, 247, 0.7)" />
+          <stop offset="100%" stopColor="rgba(164, 195, 210, 0)" />
         </radialGradient>
       </defs>
 
@@ -44,7 +44,6 @@ const Lantern = ({ className = "", width = "60", height = "120", delay = 0 }) =>
       <circle cx="50" cy="25" r="5" fill={`url(#${metalId})`} />
 
       {/* Glass Body Glow — F4: animate opacity only, NOT `r` */}
-      {/* Removed: r: [35, 45, 35] — geometry animation forces layout/repaint every frame */}
       <motion.circle 
         cx="50" cy="90" r="40" 
         fill={`url(#${glowId})`}
@@ -52,15 +51,15 @@ const Lantern = ({ className = "", width = "60", height = "120", delay = 0 }) =>
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: delay + 1 }}
       />
       
-      {/* Glass Body */}
-      <path d="M 30 50 L 70 50 L 80 130 L 20 130 Z" fill="rgba(255,255,255,0.1)" stroke={`url(#${metalId})`} strokeWidth="2" />
-      <line x1="40" y1="50" x2="30" y2="130" stroke={`url(#${metalId})`} strokeWidth="1" opacity="0.5" />
-      <line x1="60" y1="50" x2="70" y2="130" stroke={`url(#${metalId})`} strokeWidth="1" opacity="0.5" />
+      {/* Glass Body (Ivory Paper Appearance) */}
+      <path d="M 30 50 L 70 50 L 80 130 L 20 130 Z" fill="rgba(253,251,247,0.96)" stroke={`url(#${metalId})`} strokeWidth="2.5" />
+      <line x1="40" y1="50" x2="30" y2="130" stroke={`url(#${metalId})`} strokeWidth="1.2" opacity="0.6" />
+      <line x1="60" y1="50" x2="70" y2="130" stroke={`url(#${metalId})`} strokeWidth="1.2" opacity="0.6" />
 
-      {/* Inner Flame */}
+      {/* Inner Flame (Matte Gold) */}
       <motion.path 
         d="M 50 70 C 45 90, 60 100, 50 115 C 40 100, 55 90, 50 70 Z" 
-        fill="#ffcc00"
+        fill="#FFC300"
         animate={{ scale: [1, 1.1, 1], rotate: [-2, 2, -2] }}
         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay }}
         style={{ originX: '50%', originY: '115px' }}

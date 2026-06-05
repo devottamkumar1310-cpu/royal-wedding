@@ -34,13 +34,15 @@ const ensurePetalStyles = () => {
 
 // Pre-computed petal data — generated once at module level so it doesn't
 // re-run on re-render and doesn't block the main thread during animation.
+// Pre-computed petal data — generated once at module level so it doesn't
+// re-run on re-render and doesn't block the main thread during animation.
 const PETALS = Array.from({ length: 28 }, (_, i) => ({
   id: i,
   left:     `${3 + (i / 28) * 94}%`,
   size:     6 + Math.random() * 8,
   delay:    Math.random() * 1.2,
   duration: 2.2 + Math.random() * 1.4,
-  color:    i % 3 === 0 ? '#D4AF37' : i % 3 === 1 ? '#F3E5AB' : '#FFF8E7',
+  color:    i % 3 === 0 ? '#D4922A' : i % 3 === 1 ? '#C45B7A' : '#B2C9A7',
 }));
 
 const CelebrationOverlay = ({ onDone }) => {
@@ -87,7 +89,7 @@ const CelebrationOverlay = ({ onDone }) => {
           {/* ── Central burst ring ── */}
           <motion.div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                       rounded-full border-2 border-champagne-gold/60"
+                       rounded-full border-2 border-[#D4922A]/60"
             initial={{ scale: 0, opacity: 0.8 }}
             animate={{ scale: 5, opacity: 0 }}
             transition={{ duration: 1.2, ease: 'easeOut' }}
@@ -97,7 +99,7 @@ const CelebrationOverlay = ({ onDone }) => {
           {/* ── Second ring, delayed ── */}
           <motion.div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                       rounded-full border border-champagne-gold/40"
+                       rounded-full border border-[#D4922A]/40"
             initial={{ scale: 0, opacity: 0.6 }}
             animate={{ scale: 4, opacity: 0 }}
             transition={{ duration: 1.2, ease: 'easeOut', delay: 0.25 }}
@@ -113,12 +115,12 @@ const CelebrationOverlay = ({ onDone }) => {
             transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' }}
           >
             <p
-              className="text-2xl md:text-4xl font-hindi text-champagne-gold"
-              style={{ textShadow: '0 0 20px rgba(212,175,55,0.5)' }}
+              className="text-2xl md:text-4xl font-hindi text-[#D4922A]"
+              style={{ textShadow: '0 1px 3px rgba(58,59,76,0.15)' }}
             >
               शुभकामनाएं
             </p>
-            <p className="text-xs md:text-sm font-sans tracking-[0.2em] text-ivory/80 mt-2 uppercase">
+            <p className="text-xs md:text-sm font-sans tracking-[0.2em] text-[#5C3F2A]/80 mt-2 uppercase">
               Welcome to the celebration
             </p>
           </motion.div>

@@ -8,9 +8,9 @@ const RoyalBorder = ({ className = "", width = "100%", height = "100%" }) => {
       >
         <defs>
           <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.8" />
-            <stop offset="50%" stopColor="#F3E5AB" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="#D4AF37" stopOpacity="0.8" />
+            <stop offset="0%" stopColor="#FFC300" stopOpacity="0.45" />
+            <stop offset="50%" stopColor="#FFC300" stopOpacity="0.2" />
+            <stop offset="100%" stopColor="#FFC300" stopOpacity="0.45" />
           </linearGradient>
         </defs>
         <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="url(#borderGrad)" strokeWidth="2" />

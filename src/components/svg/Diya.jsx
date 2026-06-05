@@ -15,11 +15,11 @@ const Diya = ({ className = "", flipped = false }) => {
   const gradientId = `flameGlow-${uid}`;
 
   return (
-    <div className={`relative flex items-center justify-center w-12 h-12 md:w-16 md:h-16 ${className}`}>
+    <div className={`relative flex items-center justify-center w-8 h-8 md:w-10 md:h-10 ${className}`}>
       
       {/* Gentle Volumetric Glow behind the diya */}
       <motion.div 
-        className="absolute bottom-2 w-20 h-20 bg-[radial-gradient(circle,rgba(212,175,55,0.15)_0%,transparent_60%)] rounded-full pointer-events-none"
+        className="absolute bottom-1 w-12 h-12 bg-[radial-gradient(circle,rgba(200,168,93,0.06)_0%,transparent_60%)] rounded-full pointer-events-none"
         animate={{ scale: [1, 1.05, 0.98, 1.05, 1], opacity: [0.3, 0.5, 0.4, 0.6, 0.3] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: animDelay }}
       />
@@ -28,30 +28,30 @@ const Diya = ({ className = "", flipped = false }) => {
         width="100%" 
         height="100%" 
         viewBox="0 0 100 100" 
-        className="relative z-10 drop-shadow-[0_4px_6px_rgba(0,0,0,0.6)]" 
+        className="relative z-10 drop-shadow-[0_2px_4px_rgba(58,59,76,0.12)]" 
         style={{ transform: flipped ? 'scaleX(-1)' : 'none' }}
       >
         <defs>
           {/* F1: ID is now unique per instance — no more DOM ID collision */}
           <radialGradient id={gradientId}>
-            <stop offset="0%"   stopColor="#FFF" />
-            <stop offset="25%"  stopColor="#F3E5AB" />
-            <stop offset="70%"  stopColor="#D4AF37" />
+            <stop offset="0%"   stopColor="#F8F4E8" />
+            <stop offset="25%"  stopColor="#F8F4E8" />
+            <stop offset="70%"  stopColor="#FFC300" />
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
         </defs>
 
         {/* Diya Base (Champagne Gold) */}
-        <g fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <g fill="none" stroke="#FFC300" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           {/* Base Stand */}
           <path d="M 40 85 L 70 85 M 45 80 L 65 80 M 55 85 L 55 70" />
           {/* Main Bowl */}
-          <path d="M 25 55 C 25 80, 85 80, 85 55 Z" fill="rgba(11,48,70,0.9)" />
+          <path d="M 25 55 C 25 80, 85 80, 85 55 Z" fill="rgba(164,195,210,0.85)" />
           {/* Bowl Detailing/Engraving */}
           <path d="M 35 62 Q 55 72 75 62" strokeWidth="1.5" opacity="0.6" />
           <path d="M 45 68 Q 55 72 65 68" strokeWidth="1.5" opacity="0.4" />
           {/* Spout for Flame */}
-          <path d="M 20 50 Q 25 55 30 55 L 25 55 Z" fill="#D4AF37" />
+          <path d="M 20 50 Q 25 55 30 55 L 25 55 Z" fill="#FFC300" />
         </g>
 
         {/* Flickering Flame — references unique gradient ID */}
@@ -70,7 +70,7 @@ const Diya = ({ className = "", flipped = false }) => {
         
         {/* Core Hotspot of the Flame */}
         <motion.circle 
-          cx="27" cy="48" r="2" fill="#FFF" stroke="none"
+          cx="27" cy="48" r="2" fill="#F8F4E8" stroke="none"
           animate={{ opacity: [0.6, 1, 0.7, 1, 0.6] }}
           transition={{ duration: 1.5, repeat: Infinity, delay: animDelay }}
         />
@@ -78,12 +78,12 @@ const Diya = ({ className = "", flipped = false }) => {
       
       {/* Occasional Spark Particles */}
       <motion.div
-        className="absolute bottom-[40%] left-[25%] w-[3px] h-[3px] bg-[#F3E5AB] rounded-full pointer-events-none"
+        className="absolute bottom-[40%] left-[25%] w-[3px] h-[3px] bg-[#F8F4E8] rounded-full pointer-events-none"
         animate={{ y: [0, -25], x: [0, -5], opacity: [0, 0.6, 0], scale: [0, 0.8, 0] }}
         transition={{ duration: 2.5, repeat: Infinity, delay: animDelay + 1, ease: "easeOut" }}
       />
       <motion.div
-        className="absolute bottom-[45%] left-[30%] w-[2px] h-[2px] bg-[#D4AF37] rounded-full pointer-events-none"
+        className="absolute bottom-[45%] left-[30%] w-[2px] h-[2px] bg-[#FFC300] rounded-full pointer-events-none"
         animate={{ y: [0, -15], x: [0, 4], opacity: [0, 0.6, 0], scale: [0, 1, 0] }}
         transition={{ duration: 2, repeat: Infinity, delay: animDelay + 3, ease: "easeOut" }}
       />

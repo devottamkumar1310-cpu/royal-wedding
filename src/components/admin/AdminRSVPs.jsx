@@ -3,11 +3,6 @@ import { useEffect, useState } from 'react';
 const AdminRSVPs = () => {
   const [rsvps, setRsvps] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchRSVPs();
-  }, []);
-
   const fetchRSVPs = async () => {
     try {
       const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
@@ -29,6 +24,12 @@ const AdminRSVPs = () => {
     }
   };
 
+  useEffect(() => {
+    // call asynchronously to avoid synchronous setState within effect
+    const t = setTimeout(() => fetchRSVPs(), 0);
+    return () => clearTimeout(t);
+  }, []);
+
   if (loading) return <div className="text-champagne-gold">Loading RSVPs...</div>;
 
   const totalGuests = rsvps.reduce((acc, curr) => acc + (curr.is_attending ? curr.guests_count : 0), 0);
@@ -38,14 +39,14 @@ const AdminRSVPs = () => {
       <div className="flex justify-between items-end">
         <h1 className="text-2xl font-serif text-champagne-gold uppercase tracking-widest">Manage RSVPs</h1>
         <div className="text-right">
-          <p className="text-xs text-ivory/60 uppercase tracking-widest">Total Confirmed Guests</p>
+          <p className="text-xs text-[#F8F4E8]/60 uppercase tracking-widest">Total Confirmed Guests</p>
           <p className="text-3xl font-serif text-champagne-gold">{totalGuests}</p>
         </div>
       </div>
       
-      <div className="bg-royal-blue/40 border border-champagne-gold/20 rounded shadow-lg overflow-hidden">
-        <table className="w-full text-left text-sm text-ivory/80">
-          <thead className="bg-black/20 text-champagne-gold uppercase tracking-wider text-xs">
+      <div className="bg-stationery-gradient border border-[#FFC300] rounded shadow-luxe-strong overflow-hidden">
+        <table className="w-full text-left text-sm text-[#F8F4E8]/80">
+          <thead className="bg-card-blue-dark text-champagne-gold uppercase tracking-wider text-xs">
             <tr>
               <th className="px-6 py-4">Guest Name</th>
               <th className="px-6 py-4">Phone</th>
@@ -56,7 +57,7 @@ const AdminRSVPs = () => {
           </thead>
           <tbody className="divide-y divide-champagne-gold/10">
             {rsvps.map((r, index) => (
-              <tr key={index} className="hover:bg-white/5 transition-colors">
+              <tr key={index} className="hover:bg-stationery-gradient/5 transition-colors">
                 <td className="px-6 py-4 font-semibold">{r.guest_name}</td>
                 <td className="px-6 py-4">{r.phone}</td>
                 <td className="px-6 py-4">
@@ -70,7 +71,7 @@ const AdminRSVPs = () => {
             ))}
             {rsvps.length === 0 && (
               <tr>
-                <td colSpan="5" className="px-6 py-8 text-center text-ivory/50">No RSVPs received yet.</td>
+                <td colSpan="5" className="px-6 py-8 text-center text-[#F8F4E8]/50">No RSVPs received yet.</td>
               </tr>
             )}
           </tbody>
@@ -81,3 +82,4 @@ const AdminRSVPs = () => {
 };
 
 export default AdminRSVPs;
+
