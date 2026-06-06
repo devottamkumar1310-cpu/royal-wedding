@@ -11,7 +11,7 @@ const Screen1Blessing = () => {
   const { playChime } = useSoundEffects();
 
   const handleEnter = () => {
-    playChime();
+    // Silent entry as requested (removed playChime click sound)
     startExperience();
   };
 

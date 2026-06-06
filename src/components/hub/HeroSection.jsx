@@ -37,10 +37,11 @@ const CountdownTimer = ({ targetDate }) => {
     <div className="relative z-10 flex space-x-2 md:space-x-4 mt-4 md:mt-8">
       {Object.entries(timeLeft).map(([label, value]) => (
         <div key={label} className="flex flex-col items-center">
-          <div className="w-12 h-12 md:w-16 md:h-16 rounded-md bg-white border border-[#E0E0E0] flex items-center justify-center shadow-[0_4px_10px_rgba(0,0,0,0.02)]">
-            <span className="text-sm md:text-xl font-lato font-normal text-[#5C3F2A]">{value}</span>
+          <div className="w-12 h-12 md:w-16 md:h-16 rounded-sm bg-[#FDF9F6] border border-[#C89B5A]/35 flex items-center justify-center shadow-[0_4px_12px_rgba(80,50,20,0.04)] relative">
+            <div className="absolute inset-[3px] border border-[#C89B5A]/15 pointer-events-none rounded-sm" />
+            <span className="text-base md:text-2xl font-cormorant font-normal text-[#8C4F35] relative z-10">{value}</span>
           </div>
-          <span className="text-[8px] md:text-[10px] uppercase tracking-[0.12em] text-[#5C3F2A]/60 mt-1.5 md:mt-2 font-lato font-light">
+          <span className="text-[8px] md:text-[9px] uppercase tracking-[0.12em] text-[#5C3F2A]/60 mt-1.5 md:mt-2 font-lato font-light">
             {label}
           </span>
         </div>
@@ -71,12 +72,12 @@ const HeroSection = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.8 }}
-      className="w-full max-w-5xl mx-auto flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-8 lg:gap-12 px-6 pt-6 pb-24"
+      className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-6 lg:gap-12 px-6 pt-6 pb-24"
     >
-      {/* ── LEFT COLUMN: Invitation Card ─────────────── */}
-      <div className="w-full lg:w-[62%] flex flex-col justify-start relative select-none">
+      {/* ── Envelope / Invitation Card (Left on Desktop/Tablet) ─────────────── */}
+      <div className="w-full md:w-[55%] lg:w-[58%] flex flex-col justify-start relative select-none">
         {/* Clean, editorial invitation card container */}
-        <div className="w-full bg-stationery-gradient relative p-8 md:p-16 flex flex-col items-center text-center shadow-luxe-medium rounded-sm overflow-hidden">
+        <div className="w-full bg-stationery-gradient relative p-6 sm:p-8 md:p-10 lg:p-16 flex flex-col items-center text-center shadow-luxe-medium rounded-sm overflow-hidden">
           {/* Hero Floral Composition */}
           <FloralClusterTopLeft className="absolute top-0 left-0 opacity-[0.85] w-24 md:w-36 pointer-events-none select-none" />
           <FloralClusterBottomRight className="absolute bottom-0 right-0 opacity-[0.85] w-24 md:w-36 pointer-events-none select-none" />
@@ -136,22 +137,28 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* ── RIGHT COLUMN: Spotify Music Card ─────────────────── */}
-      <div className="w-full lg:w-[38%] flex flex-col justify-center items-center">
+      {/* ── Spotify Track Integration (Right on Desktop/Tablet) ─────────────────── */}
+      <div className="w-full md:w-[45%] lg:w-[42%] max-w-[500px] mt-8 md:mt-0 mb-4 mx-auto relative z-10">
         <div
-          className="relative bg-stationery-gradient shadow-luxe-medium p-4 rounded-sm w-full max-w-sm flex flex-col justify-center items-center"
+          className="relative bg-stationery-gradient p-5 rounded-[16px] shadow-luxe-medium border border-[#C89B5A]/35 overflow-hidden flex flex-col items-center justify-center"
+          style={{
+            background: '#FDF9F6',
+          }}
         >
+          {/* Delicate internal gold foil border */}
+          <div className="absolute inset-[6px] border border-[#C89B5A]/20 pointer-events-none rounded-[12px] z-20" />
+          
           {/* Spotify Player Iframe */}
           <div className="w-full relative z-10">
-            <iframe 
-              data-testid="embed-iframe" 
-              style={{ borderRadius: '4px' }} 
-              src="https://open.spotify.com/embed/track/3uWQkslzoaKzbtOAjQxWNr?utm_source=generator" 
-              width="100%" 
-              height="352" 
-              frameBorder="0" 
-              allowFullScreen="" 
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            <iframe
+              data-testid="embed-iframe"
+              style={{ borderRadius: '12px' }}
+              src="https://open.spotify.com/embed/track/4hMoPJx1DO7CC3PW5B3kkU?utm_source=generator"
+              width="100%"
+              height="352"
+              frameBorder="0"
+              allowFullScreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
             ></iframe>
           </div>

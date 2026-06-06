@@ -4,8 +4,6 @@ import { WeddingProvider, useWedding } from './context/WeddingContext';
 import Screen1Blessing from './components/screens/Screen1Blessing';
 import Screen2Envelope from './components/screens/Screen2Envelope';
 import Screen3Hub from './components/screens/Screen3Hub';
-import MusicPlayer from './components/shared/MusicPlayer';
-import SoundToggle from './components/shared/SoundToggle';
 import FloatingLanternLayer from './components/motion/FloatingLanternLayer';
 import GlobalLightRays from './components/motion/LightRays';
 
@@ -59,8 +57,6 @@ export default function App() {
             {/* Global atmospheric layers — fixed, behind all screens */}
             <FloatingLanternLayer />
             <GlobalLightRays />
-            <MusicPlayer />
-            <SoundToggle />
             <SceneManager />
           </WeddingProvider>
           } />

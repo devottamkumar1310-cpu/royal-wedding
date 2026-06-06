@@ -26,10 +26,9 @@ const Screen2Envelope = () => {
   const handleOpen = useCallback(() => {
     if (isOpen) return;
     setIsOpen(true);
-    playWaxCrack();
-    setTimeout(playPaperUnfold, 150);
+    // Silent envelope opening animation
     setTimeout(() => setIsCardVisible(true), 600);
-  }, [isOpen, playWaxCrack, playPaperUnfold]);
+  }, [isOpen]);
 
   // ─── Canvas init ─────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -161,7 +160,7 @@ const Screen2Envelope = () => {
               transition={{ duration: 0.5 }}
               className="absolute top-[15%] text-[#B76E2B] font-cormorant tracking-[0.15em] text-sm md:text-base uppercase font-medium"
             >
-              Tap Envelope to Open
+              Tap Wax Seal to Open
             </motion.div>
           )}
         </AnimatePresence>
@@ -183,26 +182,16 @@ const Screen2Envelope = () => {
             <div
               className="relative w-72 h-48 md:w-96 md:h-64 cursor-pointer rounded-sm"
               style={{
-                boxShadow: '0 25px 50px -12px rgba(0,0,0,0.18)'
+                boxShadow: '0 30px 60px -12px rgba(45,59,38,0.25), 0 18px 36px -18px rgba(0,0,0,0.22)'
               }}
               onClick={handleOpen}
             >
-              {/* Peeking Invitation Card (Before Opening) */}
-              <div 
-                className="absolute left-2 right-2 top-[-12px] bottom-10 bg-[#FDF8F4] rounded-t-sm border-t border-l border-r border-[#C47A2C]/20 flex justify-center z-0"
-                style={{
-                  boxShadow: '0 -4px 10px rgba(0,0,0,0.04)'
-                }}
-              >
-                <div className="w-[95%] h-full border-t border-l border-r border-[#C47A2C]/10 rounded-t-sm mt-1" />
-              </div>
-
-              {/* Envelope Base Color - Warm Ivory */}
-              <div className="absolute inset-0 bg-[#F8F2E8] rounded-sm z-10" />
+              {/* Envelope Base Color - Premium Sage Green */}
+              <div className="absolute inset-0 bg-[#8CA67A] rounded-sm z-10" />
               
               {/* Fine paper grain overlay */}
               <div 
-                className="absolute inset-0 pointer-events-none opacity-[0.03] z-35 mix-blend-multiply"
+                className="absolute inset-0 pointer-events-none opacity-[0.045] z-35 mix-blend-multiply"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
                 }}
@@ -211,21 +200,21 @@ const Screen2Envelope = () => {
               {/* Envelope Flaps */}
               <svg className="absolute inset-0 w-full h-full pointer-events-none z-20" viewBox="0 0 300 200" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
                 <defs>
-                  {/* Botanical Pattern - Realistic Pressed/Embossed Leaves & Vines */}
+                  {/* Botanical Pattern - Pressed Leaves & Vines in Dark Sage/White */}
                   <pattern id="botanicalPatternEmbossed" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-                    {/* Shadow layer (deboss) */}
-                    <g transform="translate(1, 1)" opacity="0.03">
-                      <path d="M 15,85 C 30,70 20,40 45,25" stroke="#2E3A28" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-                      <path d="M 45,25 C 55,20 65,30 50,40 Z" fill="#2E3A28" />
-                      <path d="M 30,55 C 40,45 45,60 30,65 Z" fill="#2E3A28" />
-                      <path d="M 50,90 C 70,80 80,50 65,20" stroke="#2E3A28" strokeWidth="1.2" fill="none" strokeLinecap="round" />
-                      <path d="M 65,20 C 60,10 45,15 55,30 Z" fill="#2E3A28" />
-                      <path d="M 75,50 C 90,45 85,60 70,65 Z" fill="#2E3A28" />
-                      <circle cx="85" cy="25" r="2.5" fill="#2E3A28" />
-                      <circle cx="20" cy="40" r="2" fill="#2E3A28" />
+                    {/* Shadow layer (debrief) */}
+                    <g transform="translate(1, 1)" opacity="0.08">
+                      <path d="M 15,85 C 30,70 20,40 45,25" stroke="#1D2A18" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                      <path d="M 45,25 C 55,20 65,30 50,40 Z" fill="#1D2A18" />
+                      <path d="M 30,55 C 40,45 45,60 30,65 Z" fill="#1D2A18" />
+                      <path d="M 50,90 C 70,80 80,50 65,20" stroke="#1D2A18" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+                      <path d="M 65,20 C 60,10 45,15 55,30 Z" fill="#1D2A18" />
+                      <path d="M 75,50 C 90,45 85,60 70,65 Z" fill="#1D2A18" />
+                      <circle cx="85" cy="25" r="2.5" fill="#1D2A18" />
+                      <circle cx="20" cy="40" r="2" fill="#1D2A18" />
                     </g>
                     {/* Highlight layer (emboss edge) */}
-                    <g transform="translate(-0.5, -0.5)" opacity="0.07">
+                    <g transform="translate(-0.5, -0.5)" opacity="0.14">
                       <path d="M 15,85 C 30,70 20,40 45,25" stroke="#FFFFFF" strokeWidth="1.5" fill="none" strokeLinecap="round" />
                       <path d="M 45,25 C 55,20 65,30 50,40 Z" fill="#FFFFFF" />
                       <path d="M 30,55 C 40,45 45,60 30,65 Z" fill="#FFFFFF" />
@@ -238,18 +227,18 @@ const Screen2Envelope = () => {
                   </pattern>
                   
                   {/* Clean soft inner shadow where flaps meet */}
-                  <filter id="flapShadowSoft" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="1" stdDeviation="3" floodColor="#000" floodOpacity="0.08" />
+                  <filter id="flapShadowSoft" x="-25%" y="-25%" width="150%" height="150%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#2D3B26" floodOpacity="0.22" />
                   </filter>
 
-                  {/* Envelope geometric flap gradients */}
+                  {/* Envelope geometric flap gradients (Sage Green) */}
                   <linearGradient id="flapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#FAF5EE" />
-                    <stop offset="100%" stopColor="#F2EBE0" />
+                    <stop offset="0%" stopColor="#9BC08D" />
+                    <stop offset="100%" stopColor="#81A673" />
                   </linearGradient>
                   <linearGradient id="flapGradBottom" x1="0%" y1="100%" x2="0%" y2="0%">
-                    <stop offset="0%" stopColor="#F5EBE0" />
-                    <stop offset="100%" stopColor="#EBE1D3" />
+                    <stop offset="0%" stopColor="#8AA97D" />
+                    <stop offset="100%" stopColor="#6E8E61" />
                   </linearGradient>
                 </defs>
 
@@ -257,21 +246,21 @@ const Screen2Envelope = () => {
                 <g filter="url(#flapShadowSoft)">
                   <polygon points="0,0 145,100 0,200" fill="url(#flapGrad)" />
                   <polygon points="0,0 145,100 0,200" fill="url(#botanicalPatternEmbossed)" />
-                  <path d="M 0,0 L 145,100 L 0,200" stroke="rgba(255,255,255,0.4)" strokeWidth="1" fill="none" strokeLinecap="round" />
+                  <path d="M 0,0 L 145,100 L 0,200" stroke="rgba(255,255,255,0.25)" strokeWidth="0.75" fill="none" strokeLinecap="round" />
                 </g>
 
                 {/* Right Flap */}
                 <g filter="url(#flapShadowSoft)">
                   <polygon points="300,0 155,100 300,200" fill="url(#flapGrad)" />
                   <polygon points="300,0 155,100 300,200" fill="url(#botanicalPatternEmbossed)" />
-                  <path d="M 300,0 L 155,100 L 300,200" stroke="rgba(255,255,255,0.4)" strokeWidth="1" fill="none" strokeLinecap="round" />
+                  <path d="M 300,0 L 155,100 L 300,200" stroke="rgba(255,255,255,0.25)" strokeWidth="0.75" fill="none" strokeLinecap="round" />
                 </g>
 
                 {/* Bottom Flap */}
                 <g filter="url(#flapShadowSoft)">
                   <polygon points="0,200 150,105 300,200" fill="url(#flapGradBottom)" />
                   <polygon points="0,200 150,105 300,200" fill="url(#botanicalPatternEmbossed)" />
-                  <path d="M 0,200 L 150,105 L 300,200" stroke="rgba(255,255,255,0.6)" strokeWidth="1" fill="none" strokeLinecap="round" />
+                  <path d="M 0,200 L 150,105 L 300,200" stroke="rgba(255,255,255,0.3)" strokeWidth="0.75" fill="none" strokeLinecap="round" />
                 </g>
               </svg>
 
@@ -285,17 +274,17 @@ const Screen2Envelope = () => {
               >
                 {/* Top Flap Front */}
                 <div className="absolute inset-0 w-full h-full" style={{ backfaceVisibility: 'hidden' }}>
-                  <svg className="w-full h-full pointer-events-none" viewBox="0 0 300 110" preserveAspectRatio="none" style={{ filter: 'drop-shadow(0 4px 6px rgba(40,50,35,0.3))' }}>
+                  <svg className="w-full h-full pointer-events-none" viewBox="0 0 300 110" preserveAspectRatio="none" style={{ filter: 'drop-shadow(0 4px 6px rgba(25,35,20,0.35))' }}>
                     <defs>
                       <linearGradient id="topFlapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#DDE8D8" />
-                        <stop offset="100%" stopColor="#C4D0BE" />
+                        <stop offset="0%" stopColor="#A5C797" />
+                        <stop offset="100%" stopColor="#87AA79" />
                       </linearGradient>
                     </defs>
                     <polygon points="0,0 150,110 300,0" fill="url(#topFlapGrad)" />
                     <polygon points="0,0 150,110 300,0" fill="url(#botanicalPatternEmbossed)" />
                     {/* Edge Highlight */}
-                    <path d="M 0,0 L 150,110 L 300,0" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                    <path d="M 0,0 L 150,110 L 300,0" stroke="rgba(255,255,255,0.4)" strokeWidth="1" fill="none" strokeLinecap="round" />
                   </svg>
                 </div>
 
@@ -305,64 +294,92 @@ const Screen2Envelope = () => {
                   style={{ backfaceVisibility: 'hidden', transform: 'rotateX(180deg)' }}
                 >
                   <svg className="w-full h-full pointer-events-none" viewBox="0 0 300 110" preserveAspectRatio="none">
-                    <polygon points="0,0 150,110 300,0" fill="#F8F2E8" />
+                    <polygon points="0,0 150,110 300,0" fill="#8BA87E" />
                     <polygon points="0,0 150,110 300,0" fill="url(#botanicalPatternEmbossed)" />
-                    <path d="M 0,0 L 150,110 L 300,0" stroke="rgba(255,255,255,0.4)" strokeWidth="1" fill="none" strokeLinecap="round" />
+                    <path d="M 0,0 L 150,110 L 300,0" stroke="rgba(255,255,255,0.2)" strokeWidth="0.75" fill="none" strokeLinecap="round" />
                   </svg>
                 </div>
+              </motion.div>
 
-                {/* Realistic Wax Seal (Matte Pressed) */}
-                <AnimatePresence>
-                  {!isOpen && (
-                    <motion.div
-                      className="absolute left-1/2 bottom-[-8px] translate-y-1/2 -translate-x-1/2 z-40 cursor-pointer"
-                      initial={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      style={{ backfaceVisibility: 'hidden' }}
-                    >
-                      <svg viewBox="0 0 100 100" className="w-[56px] h-[56px] md:w-[60px] md:h-[60px] select-none" style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.25))' }}>
-                        <defs>
-                          <radialGradient id="waxMatte" cx="30%" cy="30%" r="70%">
-                            <stop offset="0%" stopColor="#C8961D" />
-                            <stop offset="60%" stopColor="#B8860B" />
-                            <stop offset="100%" stopColor="#8A6508" />
-                          </radialGradient>
-                          <radialGradient id="waxIndentMatte" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stopColor="#8A6508" />
-                            <stop offset="85%" stopColor="#A5780A" />
-                            <stop offset="100%" stopColor="#C8961D" />
-                          </radialGradient>
-                        </defs>
-                        
+              {/* Realistic Gold Wax Seal (Large Premium Size) */}
+              <AnimatePresence>
+                {!isOpen && (
+                  <motion.div
+                    className="absolute z-40 cursor-pointer w-[72px] h-[72px] md:w-[84px] md:h-[84px]"
+                    initial={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    style={{ 
+                      top: 'calc(50% + 8px)',
+                      left: '50%',
+                      x: '-50%',
+                      y: '-50%'
+                    }}
+                  >
+                    <svg viewBox="0 0 100 100" className="w-full h-full select-none" style={{ overflow: 'visible' }}>
+                      <defs>
+                        {/* Radial gradient representing matte gold wax */}
+                        <radialGradient id="waxMatte" cx="30%" cy="30%" r="70%">
+                          <stop offset="0%" stopColor="#C8961D" />
+                          <stop offset="60%" stopColor="#B8860B" />
+                          <stop offset="100%" stopColor="#8A6508" />
+                        </radialGradient>
+                        <radialGradient id="waxIndentMatte" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stopColor="#8A6508" />
+                          <stop offset="85%" stopColor="#A5780A" />
+                          <stop offset="100%" stopColor="#C8961D" />
+                        </radialGradient>
+
+                        {/* Wax Seal 3D specularity & lighting filter */}
+                        <filter id="wax3DEffect" x="-20%" y="-20%" width="140%" height="140%">
+                          <feGaussianBlur in="SourceAlpha" stdDeviation="0.8" result="blur" />
+                          <feSpecularLighting in="blur" surfaceScale="2" specularConstant="1.6" specularExponent="25" lighting-color="#ffffff" result="spec">
+                            <feDistantLight azimuth="55" elevation="55" />
+                          </feSpecularLighting>
+                          {/* Mask specular light to the source graphic's alpha boundaries */}
+                          <feComposite in="spec" in2="SourceAlpha" operator="in" result="specMasked" />
+                          <feComposite in="SourceGraphic" in2="specMasked" operator="arithmetic" k1="0" k2="0.95" k3="0.45" k4="0" />
+                          {/* Tight contact shadow */}
+                          <feDropShadow dx="0" dy="1" stdDeviation="1.2" floodColor="#182414" floodOpacity="0.45" />
+                        </filter>
+                      </defs>
+
+                      {/* Debossed Indentation & soft contact ring on the paper */}
+                      <circle cx="50" cy="50" r="48" fill="none" stroke="#1D2A18" strokeWidth="1" opacity="0.22" />
+                      <circle cx="50" cy="50" r="48" fill="none" stroke="#FFFFFF" strokeWidth="1" opacity="0.14" transform="translate(0.5, 0.5)" />
+                      <circle cx="50" cy="50" r="47" fill="#1A2615" opacity="0.08" />
+                      
+                      <g filter="url(#wax3DEffect)">
                         {/* Outer Wax Round Frame */}
                         <circle cx="50" cy="50" r="46" fill="url(#waxMatte)" />
                         
-                        {/* Organic uneven edges for realism (No drips, just irregular perimeter) */}
+                        {/* Organic uneven edges for realism (irregular perimeter) */}
                         <path d="M 50,4 C 70,2 85,15 94,30 C 98,50 93,70 80,86 C 60,98 35,97 18,80 C 4,60 2,35 15,18 C 30,5 40,6 50,4 Z" fill="url(#waxMatte)" opacity="0.9" />
                         
                         {/* Pressed Inner Seal */}
                         <circle cx="50" cy="50" r="38" fill="url(#waxIndentMatte)" stroke="#735407" strokeWidth="1" />
                         
-                        {/* Monogram PJ */}
+                        {/* Monogram P • J - with debossed luxury lettering effect */}
                         <text 
                           x="50" 
-                          y="62" 
-                          fontFamily="'Great Vibes', cursive" 
-                          fontSize="32" 
-                          fill="#E6CC8A" 
+                          y="58" 
+                          fontFamily="'Cormorant Garamond', serif" 
+                          fontWeight="600"
+                          fontSize="22" 
+                          fill="#FAF0D0" 
                           textAnchor="middle"
                           style={{
-                            textShadow: '0px 1px 1px rgba(60,40,0,0.8), 0px -1px 1px rgba(255,255,255,0.2)'
+                            textShadow: '-0.5px -0.5px 0.5px #5A4005, 0.5px 0.5px 0.5px rgba(255,255,255,0.35)',
+                            letterSpacing: '1.5px'
                           }}
                         >
-                          PJ
+                          P • J
                         </text>
-                      </svg>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
+                      </g>
+                    </svg>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
         )}

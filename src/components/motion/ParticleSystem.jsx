@@ -6,7 +6,7 @@ const ParticleShape = ({ type, size, color }) => {
     // Petal (Rose, soft pink, or ivory)
     return (
       <svg viewBox="0 0 24 24" width={size} height={size} fill={color} style={{ display: 'block' }}>
-        <path d="M12,2 C15,8 20,12 18,17 C16,21 8,21 6,17 C4,12 9,8 12,2 Z" opacity="0.9" />
+        <path d="M12,2 C15,8 20,12 18,17 C16,21 8,21 6,17 C4,12 9,8 12,2 Z" />
       </svg>
     );
   }
@@ -17,14 +17,14 @@ const ParticleShape = ({ type, size, color }) => {
       // Rounded Eucalyptus leaf
       return (
         <svg viewBox="0 0 24 24" width={size} height={size} fill={color} style={{ display: 'block' }}>
-          <path d="M12,2 C17,6 18,13 14,17 C10,21 6,19 6,14 C6,9 9,4 12,2 Z" opacity="0.85" />
+          <path d="M12,2 C17,6 18,13 14,17 C10,21 6,19 6,14 C6,9 9,4 12,2 Z" />
         </svg>
       );
     }
     // Pointy Vine leaf
     return (
       <svg viewBox="0 0 24 24" width={size} height={size} fill={color} style={{ display: 'block' }}>
-        <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.58,20C10.66,20 16,18 20,12C21,10.5 20.3,9.04 17,8Z" opacity="0.85" />
+        <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.58,20C10.66,20 16,18 20,12C21,10.5 20.3,9.04 17,8Z" />
       </svg>
     );
   }
@@ -34,11 +34,13 @@ const ParticleShape = ({ type, size, color }) => {
       <span style={{ fontSize: `${size}px`, color: color, lineHeight: 1, display: 'block' }}>✦</span>
     );
   }
-  // Butterfly (soft blue, ivory, or blush pink)
+  // Butterfly (soft blue, ivory, or blush pink) with fluttering wings
   return (
-    <svg viewBox="0 0 24 24" width={size} height={size} fill={color} style={{ display: 'block' }}>
-      <path d="M12,10C11.5,8 8,3 4,4C3,4.5 3,7 6,11C4,12 2,14.5 2,16C2.5,17 6,15 12,12C18,15 21.5,17 22,16C22,14.5 20,12 18,11C21,7 21,4.5 20,4C16,3 12.5,8 12,10Z" />
-    </svg>
+    <div className="animate-flutter">
+      <svg viewBox="0 0 24 24" width={size} height={size} fill={color} style={{ display: 'block' }}>
+        <path d="M12,10C11.5,8 8,3 4,4C3,4.5 3,7 6,11C4,12 2,14.5 2,16C2.5,17 6,15 12,12C18,15 21.5,17 22,16C22,14.5 20,12 18,11C21,7 21,4.5 20,4C16,3 12.5,8 12,10Z" />
+      </svg>
+    </div>
   );
 };
 
@@ -72,9 +74,9 @@ const ParticleSystem = ({ count = 30 }) => {
       if (ratio < 0.40) {
         // Flowers / Petals (type 0): 40% (rose, soft pink, or ivory)
         type = 0;
-        minSize = 8;
-        maxSize = 16;
-        opacityPeak = Math.random() * (0.4 - 0.2) + 0.2;
+        minSize = 10;
+        maxSize = 20;
+        opacityPeak = Math.random() * 0.2 + 0.8; // Opacity: 0.8-1.0
         const rColor = Math.random();
         if (rColor < 0.45) color = '#F4A9C0'; // soft pink
         else if (rColor < 0.75) color = '#C45B7A'; // rose pink
@@ -82,26 +84,26 @@ const ParticleSystem = ({ count = 30 }) => {
       } else if (ratio < 0.75) {
         // Leaves (type 1): 35% (dark green or sage green)
         type = 1;
-        minSize = 6;
-        maxSize = 10;
-        opacityPeak = Math.random() * (0.4 - 0.2) + 0.2;
+        minSize = 8;
+        maxSize = 13;
+        opacityPeak = Math.random() * 0.2 + 0.8; // Opacity: 0.8-1.0
         color = Math.random() > 0.5 ? '#3D7A30' : '#9DB893';
       } else if (ratio < 0.95) {
         // Butterflies (type 3): 20% (soft blue, ivory, or blush pink)
         type = 3;
-        minSize = 10;
-        maxSize = 14;
-        opacityPeak = Math.random() * (0.4 - 0.25) + 0.25;
+        minSize = 13;
+        maxSize = 18;
+        opacityPeak = Math.random() * 0.1 + 0.9; // Opacity: 0.9-1.0
         const rColor = Math.random();
-        if (rColor < 0.45) color = '#6B9FE8'; // soft blue
+        if (rColor < 0.45) color = '#E6C17E'; // luxury gold/sandstone butterfly to match DNA
         else if (rColor < 0.75) color = '#FAF0E6'; // ivory
         else color = '#F4A9C0'; // blush pink
       } else {
         // Gold Sparkles (type 2): 5% (gold)
         type = 2;
-        minSize = 3;
-        maxSize = 5;
-        opacityPeak = Math.random() * (0.3 - 0.15) + 0.15;
+        minSize = 4;
+        maxSize = 7;
+        opacityPeak = Math.random() * 0.2 + 0.7; // Opacity: 0.7-0.9
         color = '#D4922A';
       }
 
@@ -165,9 +167,9 @@ const ParticleSystem = ({ count = 30 }) => {
               height: p.size,
             }}
             animate={{
-              y: ["0vh", "-100vh"],
+              y: ["-20vh", "120vh"],
               x: xPath,
-              opacity: [0, p.opacityPeak, 0],
+              opacity: [0, p.opacityPeak, p.opacityPeak, 0],
               rotate: [p.startRotation, p.startRotation + p.rotationRange],
             }}
             transition={{

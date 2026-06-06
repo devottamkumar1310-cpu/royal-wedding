@@ -123,18 +123,18 @@ const RsvpWidget = () => {
               
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#5C3F2A]/70 mb-1 font-lato font-light">Name</label>
-                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-white border border-[#E0E0E0] p-3 text-[#5C3F2A] outline-none focus:border-[#D4922A] text-base rounded-md transition-colors" />
+                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-[#FDF9F6] border border-[#C89B5A]/45 p-3 text-[#5C3F2A] outline-none focus:border-[#C89B5A] text-base rounded-sm transition-colors font-lato font-light" />
               </div>
               
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#5C3F2A]/70 mb-1 font-lato font-light">Phone</label>
-                <input required pattern="[0-9]{10}" title="10 digit mobile number" type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full bg-white border border-[#E0E0E0] p-3 text-[#5C3F2A] outline-none focus:border-[#D4922A] text-base rounded-md transition-colors" />
+                <input required pattern="[0-9]{10}" title="10 digit mobile number" type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full bg-[#FDF9F6] border border-[#C89B5A]/45 p-3 text-[#5C3F2A] outline-none focus:border-[#C89B5A] text-base rounded-sm transition-colors font-lato font-light" />
               </div>
               
               <div className="flex space-x-4">
                 <div className="flex-1">
                   <label className="block text-xs uppercase tracking-wider text-[#5C3F2A]/70 mb-1 font-lato font-light">Attending?</label>
-                  <select value={formData.attending} onChange={e => setFormData({...formData, attending: e.target.value === 'true'})} className="w-full bg-white border border-[#E0E0E0] p-3 text-[#5C3F2A] outline-none focus:border-[#D4922A] text-base rounded-md transition-colors cursor-pointer">
+                  <select value={formData.attending} onChange={e => setFormData({...formData, attending: e.target.value === 'true'})} className="w-full bg-[#FDF9F6] border border-[#C89B5A]/45 p-3 text-[#5C3F2A] outline-none focus:border-[#C89B5A] text-base rounded-sm transition-colors cursor-pointer font-lato font-light">
                     <option value="true">Yes, joyfully</option>
                     <option value="false">Regretfully, no</option>
                   </select>
@@ -142,14 +142,14 @@ const RsvpWidget = () => {
                 {formData.attending && (
                   <div className="flex-1">
                     <label className="block text-xs uppercase tracking-wider text-[#5C3F2A]/70 mb-1 font-lato font-light">Guests</label>
-                    <input type="number" min="1" max="20" value={formData.guests} onChange={e => setFormData({...formData, guests: e.target.value})} className="w-full bg-white border border-[#E0E0E0] p-3 text-[#5C3F2A] outline-none focus:border-[#D4922A] text-base rounded-md transition-colors" />
+                    <input type="number" min="1" max="20" value={formData.guests} onChange={e => setFormData({...formData, guests: e.target.value})} className="w-full bg-[#FDF9F6] border border-[#C89B5A]/45 p-3 text-[#5C3F2A] outline-none focus:border-[#C89B5A] text-base rounded-sm transition-colors font-lato font-light" />
                   </div>
                 )}
               </div>
               
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#5C3F2A]/70 mb-1 font-lato font-light">Message (Optional)</label>
-                <textarea rows="2" value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} className="w-full bg-white border border-[#E0E0E0] p-2.5 text-[#5C3F2A] outline-none focus:border-[#D4922A] text-base rounded-md transition-colors resize-none" />
+                <textarea rows="2" value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} className="w-full bg-[#FDF9F6] border border-[#C89B5A]/45 p-2.5 text-[#5C3F2A] outline-none focus:border-[#C89B5A] text-base rounded-sm transition-colors resize-none font-lato font-light" />
               </div>
 
               {/* Inline error — no native alert() dialogs in luxury UI */}

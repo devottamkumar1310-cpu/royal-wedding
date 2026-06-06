@@ -12,32 +12,32 @@ import {
 const getCardPersonality = (title, index) => {
   const t = (title || '').toLowerCase();
   
-  // 1. Ganpati Pujan / Ghritpan (Index 0) -> linear-gradient(135deg, #8B0A2A, #B10F3A)
+  // 1. Ganpati Pujan / Ghritpan (Index 0) -> Deep Wine
   if (t.includes('ganpati') || t.includes('pujan') || t.includes('ghrit') || t.includes('घृतपान') || index === 0) {
-    return { bg: 'linear-gradient(135deg, #8B0A2A, #B10F3A)' };
+    return { bg: 'linear-gradient(135deg, #5A0A19, #3D040E)' };
   }
-  // 2. Vinayak (Index 1) -> linear-gradient(135deg, #A10F3F, #C0134B)
+  // 2. Vinayak (Index 1) -> Rich Ruby
   if (t.includes('vinayak') || t.includes('विनायक') || index === 1) {
-    return { bg: 'linear-gradient(135deg, #A10F3F, #C0134B)' };
+    return { bg: 'linear-gradient(135deg, #7A1227, #530514)' };
   }
-  // 3. Badi Bandoli (Index 2) -> linear-gradient(135deg, #B01245, #D11E58)
+  // 3. Badi Bandoli (Index 2) -> Elegant Deep Rose-Crimson
   if (t.includes('bandoli') || t.includes('बन्दोली') || index === 2) {
-    return { bg: 'linear-gradient(135deg, #B01245, #D11E58)' };
+    return { bg: 'linear-gradient(135deg, #6E0E20, #4A0512)' };
   }
-  // 4. Barat Swagat (Index 3) -> linear-gradient(135deg, #8B0A2A, #C0134B, #8B0A2A)
+  // 4. Barat Swagat (Index 3) -> Deep Crimson
   if (t.includes('swagat') || t.includes('स्वागत') || index === 3) {
-    return { bg: 'linear-gradient(135deg, #8B0A2A, #C0134B, #8B0A2A)' };
+    return { bg: 'linear-gradient(135deg, #630818, #3E020B)' };
   }
-  // 5. Panigrahan Sanskar (Index 4) -> linear-gradient(135deg, #7D0B2E, #A11144)
+  // 5. Panigrahan Sanskar (Index 4) -> Royal Wine-Burgundy
   if (t.includes('panigrahan') || t.includes('sanskar') || t.includes('संस्कार') || index === 4) {
-    return { bg: 'linear-gradient(135deg, #7D0B2E, #A11144)' };
+    return { bg: 'linear-gradient(135deg, #530412, #340008)' };
   }
-  // 6. Preetibhoj Samaroh (Index 5) -> linear-gradient(135deg, #9B1140, #C2185B)
+  // 6. Preetibhoj Samaroh (Index 5) -> Rich Ruby-Rose
   if (t.includes('preetibhoj') || t.includes('samaroh') || t.includes('समारोह') || index === 5) {
-    return { bg: 'linear-gradient(135deg, #9B1140, #C2185B)' };
+    return { bg: 'linear-gradient(135deg, #82182D, #5E0C1C)' };
   }
   
-  return { bg: 'linear-gradient(135deg, #8B0A2A, #B10F3A)' };
+  return { bg: 'linear-gradient(135deg, #5A0A19, #3D040E)' };
 };
 
 const getCardBotanicals = (index) => {
@@ -101,41 +101,44 @@ const JharokhaCard = ({ event, index }) => {
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.6, delay: index * 0.06, ease: 'easeOut' }}
       whileHover={{ 
-        y: -4, 
-        boxShadow: '0 20px 40px rgba(0,0,0,0.12)' 
+        y: -5, 
+        boxShadow: '0 20px 40px rgba(50,30,30,0.25)' 
       }}
-      className="relative w-full rounded-lg shadow-luxe-medium overflow-hidden cursor-pointer"
+      className="relative w-full rounded-sm shadow-luxe-medium overflow-hidden cursor-pointer"
     >
       <div 
-        className="relative p-6 md:p-8 rounded-lg overflow-hidden flex flex-col justify-center text-center min-h-[145px]"
+        className="relative p-7 md:p-9 rounded-sm overflow-hidden flex flex-col justify-center text-center min-h-[160px]"
         style={{ 
           background: p.bg,
-          border: '1px solid rgba(255,255,255,0.15)',
-          boxShadow: '0 0 0 1px rgba(212,146,42,0.25) inset'
+          border: '1px solid #C89B5A',
+          boxShadow: 'inset 0 0 0 1px rgba(200, 155, 90, 0.4)'
         }}
       >
-        {/* Watercolor botanical corners (opacity 20-35% to support without competing) */}
-        <TopComponent className={`absolute ${bots.topClass} opacity-[0.28] pointer-events-none select-none`} />
-        <BottomComponent className={`absolute ${bots.bottomClass} opacity-[0.28] pointer-events-none select-none`} />
+        {/* Dual Gold Foil Border Frame */}
+        <div className="absolute inset-[5px] border border-[#C89B5A]/25 pointer-events-none rounded-sm z-10" />
+
+        {/* Watercolor botanical corners (opacity 18% to support without competing) */}
+        <TopComponent className={`absolute ${bots.topClass} opacity-[0.18] pointer-events-none select-none`} />
+        <BottomComponent className={`absolute ${bots.bottomClass} opacity-[0.18] pointer-events-none select-none`} />
 
         {/* Title: Ceremony title: Great Vibes */}
         <h3
-          className="font-greatvibes text-white text-3xl md:text-4xl font-normal mb-2"
+          className="font-greatvibes text-[#E8C37C] text-3.5xl md:text-4.5xl font-normal mb-2 relative z-10"
         >
           {event.title}
         </h3>
 
         {/* Divider and Tagline / Time */}
-        <div className="flex items-center justify-center space-x-3 mb-3 mt-1">
-          <div className="h-px flex-1 bg-white/20" />
-          <p className="font-cormorant text-white/85 italic tracking-[0.12em] text-[11px] md:text-xs">
+        <div className="flex items-center justify-center space-x-3 mb-3 mt-1 relative z-10">
+          <div className="h-px flex-1 bg-[#C89B5A]/35" />
+          <p className="font-cormorant text-[#FDF9F6]/85 italic tracking-[0.15em] text-xs md:text-sm">
             {event.time}
           </p>
-          <div className="h-px flex-1 bg-white/20" />
+          <div className="h-px flex-1 bg-[#C89B5A]/35" />
         </div>
 
         {/* Tagline / Desc: Lato font */}
-        <p className="font-lato font-light text-xs md:text-sm text-white/80 leading-relaxed">
+        <p className="font-lato font-light text-xs md:text-sm text-[#FDF9F6]/80 leading-relaxed relative z-10 max-w-[85%] mx-auto">
           {event.desc}
         </p>
       </div>
