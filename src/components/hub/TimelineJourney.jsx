@@ -9,6 +9,8 @@ import {
   FloralBranchEdgeRight 
 } from '../svg/BotanicalDecor';
 
+// ─── Card helpers — unchanged ─────────────────────────────────────────────────
+
 const getCardPersonality = (title, index) => {
   const t = (title || '').toLowerCase();
   
@@ -88,7 +90,9 @@ const getCardBotanicals = (index) => {
   }
 };
 
-const JharokhaCard = ({ event, index }) => {
+// ─── JharokhaCard — internals completely unchanged ────────────────────────────
+
+const JharokhaCard = ({ event, index, variants }) => {
   const p = getCardPersonality(event.title, index);
   const bots = getCardBotanicals(index);
   const TopComponent = bots.Top;
@@ -96,22 +100,22 @@ const JharokhaCard = ({ event, index }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.6, delay: index * 0.06, ease: 'easeOut' }}
+      variants={variants}
       whileHover={{ 
         y: -5, 
-        boxShadow: '0 20px 40px rgba(50,30,30,0.25)' 
+        boxShadow: '0 22px 44px rgba(50,30,30,0.30), 0 6px 14px rgba(80,40,15,0.14)' 
       }}
-      className="relative w-full rounded-sm shadow-luxe-medium overflow-hidden cursor-pointer"
+      className="relative w-full rounded-sm overflow-hidden cursor-pointer"
+      style={{
+        boxShadow: '0 14px 36px rgba(0,0,0,0.18), 0 4px 12px rgba(80,40,15,0.10)',
+      }}
     >
       <div 
         className="relative p-7 md:p-9 rounded-sm overflow-hidden flex flex-col justify-center text-center min-h-[160px]"
         style={{ 
           background: p.bg,
-          border: '1px solid #C89B5A',
-          boxShadow: 'inset 0 0 0 1px rgba(200, 155, 90, 0.4)'
+          border: '1px solid rgba(200,155,90,0.85)',
+          boxShadow: 'inset 0 0 0 1px rgba(200, 155, 90, 0.55)'
         }}
       >
         {/* Dual Gold Foil Border Frame */}
@@ -146,6 +150,67 @@ const JharokhaCard = ({ event, index }) => {
   );
 };
 
+// ─── Timeline spine node ──────────────────────────────────────────────────────
+
+const TimelineNode = ({ variants }) => (
+  <motion.div
+    variants={variants}
+    className="relative z-10 flex items-center justify-center flex-shrink-0"
+  >
+    {/* Ambient halo */}
+    <motion.div
+      className="absolute rounded-full pointer-events-none"
+      style={{
+        width: 48,
+        height: 48,
+        background: 'radial-gradient(circle, rgba(200,155,90,0.22) 0%, transparent 70%)',
+      }}
+      variants={{
+        hidden: { scale: 0.6, opacity: 0 },
+        visible: { 
+          scale: [0.8, 1.2, 1], 
+          opacity: 1, 
+          transition: { duration: 1.2, ease: 'easeOut' } 
+        }
+      }}
+    />
+    {/* Outer ring */}
+    <motion.div
+      style={{
+        width: 22,
+        height: 22,
+      }}
+      variants={{
+        hidden: { 
+          scale: 0.8,
+          borderColor: 'rgba(200,155,90,0.30)',
+          boxShadow: '0 0 0px rgba(200,155,90,0), 0 0 0 0px rgba(200,155,90,0)'
+        },
+        visible: { 
+          scale: 1,
+          borderColor: 'rgba(200,155,90,0.90)',
+          boxShadow: '0 0 14px rgba(200,155,90,0.35), 0 0 0 5px rgba(200,155,90,0.12)',
+          transition: { duration: 0.8, ease: 'easeOut' }
+        }
+      }}
+      className="relative flex items-center justify-center rounded-full bg-[#FAF6F0] border-[1.5px]"
+    >
+      {/* Core dot */}
+      <motion.div
+        className="rounded-full"
+        style={{ width: 9, height: 9, background: '#C89B5A' }}
+        variants={{
+          hidden: { scale: 0.5, opacity: 0.5 },
+          visible: { scale: 1, opacity: 1, transition: { duration: 0.5 } }
+        }}
+      />
+    </motion.div>
+  </motion.div>
+);
+
+
+// ─── TimelineJourney ──────────────────────────────────────────────────────────
+
 const TimelineJourney = () => {
   const { content } = useContent('timeline');
 
@@ -160,6 +225,24 @@ const TimelineJourney = () => {
 
   const events = content || defaultEvents;
 
+  const nodeVariants = {
+    hidden: { opacity: 0.3, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.6, ease: [0.34, 1.56, 0.64, 1] },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { delay: 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
   return (
     <motion.div
       key="journey"
@@ -170,18 +253,139 @@ const TimelineJourney = () => {
       className="w-full flex flex-col items-center pb-32 pt-8 px-6 relative overflow-hidden"
     >
       <div className="max-w-5xl mx-auto relative w-full z-10 px-4">
-        {/* Section Heading: Great Vibes, Rose Accent */}
-        <h2
-          className="font-greatvibes text-center mb-16 text-rose-accent text-4xl font-normal"
-        >
+
+        <h2 className="font-greatvibes text-center mb-16 text-rose-accent text-4xl font-normal">
           The Royal Journey
         </h2>
 
-        {/* Responsive grid event board */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 w-full">
-          {events.map((event, index) => (
-            <JharokhaCard key={event.id} event={event} index={index} />
-          ))}
+        {/*
+          ─── Layout strategy ─────────────────────────────────────────────────
+          The spine is a SINGLE absolute-positioned element spanning the full
+          height of the events container (position: relative).
+
+          Desktop: spine sits at left-1/2 (transform: translateX(-1px)).
+                   Cards live in flex-1 side columns — they NEVER overlap center.
+                   Horizontal arms bridge each card to its node.
+
+          Mobile:  spine sits at left-1rem = 16px (centre of the 32px node col).
+                   Cards are in flex-1 to the right — they never overlap the spine.
+
+          Nodes are z-10 so they render ON TOP of the spine, not breaking it.
+          The spine is always continuous and uninterrupted.
+        */}
+        <div className="relative">
+
+          {/* ── Single continuous spine — Desktop (centred) ── */}
+          <div
+            className="hidden md:block absolute pointer-events-none"
+            style={{
+              left: '50%',
+              transform: 'translateX(-1px)',
+              top: 0,
+              bottom: 0,
+              width: 2,
+              background: 'rgba(200,155,90,0.80)',
+              boxShadow: '0 0 8px rgba(200,155,90,0.22)',
+              zIndex: 0,
+            }}
+          />
+
+          {/* ── Single continuous spine — Mobile (left node column) ── */}
+          <div
+            className="md:hidden absolute pointer-events-none"
+            style={{
+              left: '1rem',
+              transform: 'translateX(-1px)',
+              top: 0,
+              bottom: 0,
+              width: 2,
+              background: 'rgba(200,155,90,0.80)',
+              boxShadow: '0 0 8px rgba(200,155,90,0.22)',
+              zIndex: 0,
+            }}
+          />
+
+          {/* ── Event rows ── */}
+          <div className="flex flex-col gap-3 md:gap-4">
+            {events.map((event, index) => {
+              const isLeft = index % 2 === 0;
+
+              return (
+                <motion.div
+                  key={event.id}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: '-22% 0px -22% 0px' }}
+                >
+                  {/* ── Desktop alternating layout ── */}
+                  <div className="hidden md:flex items-center w-full">
+
+                    {/* Left card slot */}
+                    <div className="flex-1 flex items-center justify-end">
+                      {isLeft ? (
+                        <motion.div variants={cardVariants} className="w-full max-w-[480px]">
+                          <JharokhaCard event={event} index={index} variants={cardVariants} />
+                        </motion.div>
+                      ) : (
+                        <div className="w-full max-w-[480px]" />
+                      )}
+                    </div>
+
+                    {/* Horizontal arm — left card to node */}
+                    <div
+                      className="flex-shrink-0"
+                      style={{
+                        width: 32,
+                        height: 1.5,
+                        background: isLeft ? '#C89B5A' : 'transparent',
+                      }}
+                    />
+
+                    {/* Node — z-10 so it renders on top of the spine */}
+                    <TimelineNode variants={nodeVariants} />
+
+                    {/* Horizontal arm — node to right card */}
+                    <div
+                      className="flex-shrink-0"
+                      style={{
+                        width: 32,
+                        height: 1.5,
+                        background: !isLeft ? '#C89B5A' : 'transparent',
+                      }}
+                    />
+
+                    {/* Right card slot */}
+                    <div className="flex-1 flex items-center justify-start">
+                      {!isLeft ? (
+                        <motion.div variants={cardVariants} className="w-full max-w-[480px]">
+                          <JharokhaCard event={event} index={index} variants={cardVariants} />
+                        </motion.div>
+                      ) : (
+                        <div className="w-full max-w-[480px]" />
+                      )}
+                    </div>
+                  </div>
+
+                  {/* ── Mobile layout (node left, card right) ── */}
+                  <div className="md:hidden flex items-center">
+                    {/* Node column — 32px wide, spine passes through its centre */}
+                    <div className="w-8 flex-shrink-0 flex justify-center">
+                      <TimelineNode variants={nodeVariants} />
+                    </div>
+                    {/* Horizontal arm: node to card */}
+                    <div
+                      className="flex-shrink-0"
+                      style={{ width: 20, height: 1.5, background: '#C89B5A' }}
+                    />
+                    <motion.div variants={cardVariants} className="flex-1 min-w-0">
+                      <JharokhaCard event={event} index={index} variants={cardVariants} />
+                    </motion.div>
+                  </div>
+
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </motion.div>
@@ -189,3 +393,4 @@ const TimelineJourney = () => {
 };
 
 export default TimelineJourney;
+

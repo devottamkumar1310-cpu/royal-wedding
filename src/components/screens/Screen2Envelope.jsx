@@ -160,7 +160,7 @@ const Screen2Envelope = () => {
               transition={{ duration: 0.5 }}
               className="absolute top-[15%] text-[#B76E2B] font-cormorant tracking-[0.15em] text-sm md:text-base uppercase font-medium"
             >
-              Tap Wax Seal to Open
+              Tap Envelope to Open
             </motion.div>
           )}
         </AnimatePresence>
@@ -310,10 +310,9 @@ const Screen2Envelope = () => {
                     exit={{ scale: 0, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                     style={{ 
-                      top: 'calc(50% + 8px)',
+                      top: '51%',
                       left: '50%',
-                      x: '-50%',
-                      y: '-50%'
+                      transform: 'translate(-50%, -50%)'
                     }}
                   >
                     <svg viewBox="0 0 100 100" className="w-full h-full select-none" style={{ overflow: 'visible' }}>

@@ -177,10 +177,10 @@ const BlessingsWall = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-20px' }}
               transition={{ duration: 0.6, delay: Math.min(index * 0.08, 0.4) }}
-              className={`p-5 md:p-6 shadow-[0_12px_30px_rgba(80,50,20,0.08)] hover:shadow-[0_20px_45px_rgba(80,50,20,0.15)] transition-all duration-500 rounded-sm relative overflow-hidden border flex flex-col items-center justify-center text-center ${
+              className={`p-5 md:p-6 shadow-[0_14px_38px_rgba(80,50,20,0.14),_0_3px_10px_rgba(0,0,0,0.07)] hover:shadow-[0_22px_48px_rgba(80,50,20,0.20),_0_5px_14px_rgba(0,0,0,0.08)] transition-all duration-500 rounded-sm relative overflow-hidden border flex flex-col items-center justify-center text-center ${
                 isTerracotta
                   ? 'bg-[#C6653E] border-[#E8C37C]/20 text-[#FDF9F6]'
-                  : 'bg-[#FDF9F6] border-[#C89B5A]/20 text-[#5C3F2A]'
+                  : 'bg-[#FDF9F6] border-[#C89B5A]/35 text-[#5C3F2A]'
               }${wish._optimistic ? ' opacity-70' : ''}`}
             >
               {/* Soft cotton paper texture grain */}

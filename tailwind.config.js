@@ -66,8 +66,8 @@ export default {
       },
       boxShadow: {
         'luxe-light':  '0 4px 12px rgba(0,0,0,0.08)',
-        'luxe-medium': '0 12px 30px rgba(0,0,0,0.12)',
-        'luxe-strong': '0 18px 40px rgba(0,0,0,0.16)',
+        'luxe-medium': '0 14px 38px rgba(80,50,20,0.13), 0 3px 10px rgba(0,0,0,0.07)',
+        'luxe-strong': '0 20px 48px rgba(80,50,20,0.17), 0 5px 14px rgba(0,0,0,0.08)',
       },
     },
   },
